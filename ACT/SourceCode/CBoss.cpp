@@ -93,7 +93,7 @@ float dt = 1000 / FPS / 2 / 2; // 秒
 
 
 //自機を遅くするway
-void CBoss::display() {
+void CBoss::SlowDraw(CCamera* pCamera) {
    
 
     // 遅くなれWay描画 ---
@@ -123,7 +123,7 @@ void CBoss::display() {
 
 
 //普通のway
-void CBoss::WayDraw()
+void CBoss::WayDraw(CCamera* pCamera)
 {
     // --- Way描画 ---
     fireTimer += dt;
@@ -153,7 +153,7 @@ void CBoss::WayDraw()
 
 
 //ボスの一部から発射される、ばらまき描画
-void CBoss::BaraDraw()
+void CBoss::BaraDraw(CCamera* pCamera)
 {
     // バラマキ弾発射
     BarafireTimer += dt;
@@ -175,89 +175,74 @@ void CBoss::BaraDraw()
             return (b.zx < 0 || b.zx > 480 || b.zy < 0 || b.zy > 640);
         }), BaraShots.end());
 }
-
-//画像を読み込ませるための関数
-void CBoss::Init(HDC hScreenDC, HDC hMemDC, HDC hWorkDC)
-{
-    ////ボスの一部
-    //m_pBoss_buiImg = new CImage(hScreenDC, hMemDC, hWorkDC);
-    ////m_pBoss_buiImg->LoadBmp("Data\\BMP\\Mine.bmp");
-
-    ////ボスの本体
-    //m_pZBossImg = new CImage(hScreenDC, hMemDC, hWorkDC);
-    ////m_pZBossImg->LoadBmp("Data\\BMP\\boss.bmp");
-
-
-}
-   
+ 
 
 //-----------描画--------------------
-// 
-//      結合するにあたり、ボスの一部だけでも描画する
-void CBoss::Draw(HDC m_hMemDC)
+
+void CBoss::Draw(CCamera*  pCamera)
 {
 
-    m_Boss_bui.y = m_Boss.y + 70;
+    
     
 
     //ボスの降らせ攻撃の状態による処理
     switch (m_BossHurase)
     {
-    case enBossHurase::taiki:
+    case enBossHurase::taiki:   //待機
 
-        m_subboss->TransBlt(
-            m_Boss.x + 70, //表示位置x
-            m_Boss_bui.y, //表示位置y
-            64,         //元画像幅
-            64,         //元画像　たかさ
-            64*4,          //元画像x座標
-            0           //元画像ｙ座標
-        );
+       //ボスの一部を描画する
+        m_FrameSplit.w = 113;
+        m_FrameSplit.h = 94;
+        m_FrameSplit.x = 0;
+        m_FrameSplit.y = 0;
 
-        m_subboss->TransBlt(
-            m_Boss.x + 170, //表示位置x
-            m_Boss_bui.y, //表示位置y
-            64,         //元画像幅
-            64,         //元画像　たかさ
-            64*4,          //元画像x座標
-            0           //元画像ｙ座標
-        );
+        m_Boss_BuiPosition->x = m_Boss_bui.x;
+        m_Boss_BuiPosition->y = m_Boss_bui.y;
+        VECTOR2 DispPos1 = pCamera->CalcToPositionInCamera(m_Boss_BuiPosition, &m_FrameSplit);
+
+        m_bossIMG->TransBlt(
+            DispPos1.x,
+            DispPos1.y,
+            m_FrameSplit.w,
+            m_FrameSplit.h,
+            m_FrameSplit.x,
+            m_FrameSplit.y);
+
+
 
         break;
 
     //ｙ座標が下に移動する処理
-    case enBossHurase::hurase:
+    case enBossHurase::hurase:  //降らせる
    
-        if (m_Boss_bui.y <= 500)
-        {
-            m_Boss_bui.y++;
-        }
-
+        m_Boss_BuiPosition->y += 2;
 
         break;
 
         //空中で止める
-    case enBossHurase::tome:
-
-        m_Boss_bui.y == 500;
-
+    case enBossHurase::tome:        //空中で止める
+        if (m_Boss_BuiPosition->y >= 500)
+        {
+            m_Boss_BuiPosition->y == 500;
+        }
         break;
 
         //ばらまき弾打つ
-    case enBossHurase::utima:
+    case enBossHurase::utima:       //弾を打つ  
         
         //ばらまき描画
-        CBoss::BaraDraw();
+        CBoss::BaraDraw(pCamera);
 
         break;
 
         //元に戻ってくる
     case enBossHurase::modorima:
 
-        if (m_Boss_bui.y >= m_Boss.y + 70)
+        //ボスの一部が空中で止めた座標より下だった場合
+        //
+        while (m_Boss_BuiPosition->y >= 500)
         {
-            m_Boss_bui.y--;
-       
+            m_Boss_BuiPosition->y -= 2;
         }
        
 
@@ -269,14 +254,22 @@ void CBoss::Draw(HDC m_hMemDC)
 //ボス本体の描画  
 void CBoss::ZDraw(HDC m_hMemDC)
 {
-        m_bossIMG->TransBlt(
-        m_Boss.x, //表示位置x
-        m_Boss.y, //表示位置y
-        256,         //元画像幅
-        256,         //元画像　たかさ
-        0,          //元画像x座標
-        256           //元画像ｙ座標
-    );
+    //ボス本体の描画
+
+    m_FrameSplit.w = 356;
+    m_FrameSplit.h = 356;
+    m_FrameSplit.x = 0;
+    m_FrameSplit.y = 0;
+
+    m_bossIMG->TransBlt(
+        m_BossPosition->x,
+        m_BossPosition->y,
+        m_FrameSplit.w,
+        m_FrameSplit.h,
+        m_FrameSplit.x,
+        m_FrameSplit.y);
+
+
 }
 
 //動作処理

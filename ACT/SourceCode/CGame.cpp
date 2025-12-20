@@ -127,6 +127,9 @@ bool CGame::Create()
 		m_pEExprotionImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 	}
 
+
+
+
 //--------------------------------
 //ステージ＆シーン関係
 //-----------------------
@@ -254,6 +257,8 @@ bool CGame::Create()
 	m_pEnemy2 = new CEnemy2();
 	m_pEnemy2->SetImage(m_pEnemy2Img);
 
+
+	//--------------ボスのインスタンス---------------
 	m_pBoss = new CBoss();
 	m_pBoss->SetImageBoss(m_pBOSSEnemyImg);
 	m_pBoss->SetImageBOSSHand(m_pBOSSHandImg);
@@ -322,8 +327,11 @@ void CGame::Destroy()
 	SAFE_DELETE( m_pEnemyImg );
 	SAFE_DELETE( m_pCharaImg );
 	SAFE_DELETE( m_pBackImg  );
+
 	SAFE_DELETE(m_pBOSSEnemyImg);
 	SAFE_DELETE(m_pBOSSHandImg);
+
+
 	SAFE_DELETE(m_pscoreImg);
 	SAFE_DELETE(m_pExprotionImg);
 	SAFE_DELETE(m_pEExprotionImg);
@@ -403,7 +411,7 @@ void CGame::Update()
 			//ステージ動作.
 			m_pStage->Update();
 
-			//ステージ動作.
+			//ボス動作.
 			m_pBoss->Update();
 
 			//カメラ位置をプレイヤーに揃える.

@@ -1,8 +1,8 @@
 #pragma once
-#include<Windows.h>
-#include"Global.h"
-#include "CSound.h"		//サウンドクラス
-#include"CImage.h"
+#include "CCharacter.h"	//キャラクタークラス.
+#include "CCamera.h"	//カメラクラス.
+#include "MyMath.h"	//カメラクラス.
+#include <cmath>
 #include<vector>
 
 #pragma comment( lib, "msimg32.lib" )	//指定色を透過して描画で使用する.
@@ -11,7 +11,10 @@
 //=======================================
 //クラス
 //=====================================
-class CBoss {
+class CBoss 
+	: public CCharacter	//キャラクタークラスを継承.
+{
+
 public:
 	//定数宣言
 
@@ -75,6 +78,9 @@ public:
 	//初期化（リセット）
 	void InitializeGame();
 
+
+	//計算するための関数
+
 	// --- 自機を遅くするWay弾発射 ---
 	void SlowWayShot(int slowway, float angleRangeRad, float speed);
 
@@ -84,25 +90,28 @@ public:
 	//-----ばらまき弾--------
 	void bara(int num, float speed);
 
+
+
+
+
 	//自機をおそくするway描画
-	void display();
+	void SlowDraw(CCamera* pCamera);
 
 	//普通のway描画
-	void WayDraw();
+	void WayDraw(CCamera* pCamera);
 
 	//ボスの一部から発射される、ばらまき描画
-	void BaraDraw();
+	void BaraDraw(CCamera* pCamera);
 
 	
-
-	//画像を読み込ませるための関数
-	void Init(HDC hScreenDC, HDC hMemDC, HDC hWorkDC);
-
 	//ボスが左右に動いたりするための処理
-	void Update();
+
+	void Update() override;
 
 	//描画・・・結合するにあたり、ボスの一部だけでも描画する
-	void Draw(HDC m_hMemDC);
+	void Draw(CCamera* pCamera) override;
+	
+	
 
 	//ボス本体を描画する関数
 	void ZDraw(HDC m_hMemDC);
@@ -117,20 +126,32 @@ public:
 	enBossHurase m_BossHurase;
 
 
-	int x;	//x座標
-	int y;	//ｙ座標
-	int state;//状態
-	int ExpAnimCnt;	//爆発アニメーションカウンタ
-	float fireInterval = 500; // 発射間隔（mili秒）
-	float BarafireInterval = 450; // 発射間隔（mili秒）
-	float fireTimer = 0.0f;
-	float BarafireTimer = 0.0f;
+	int x;		//x座標
+	int y;		//ｙ座標
+	int state;	//状態
+	int ExpAnimCnt;					//爆発アニメーションカウンタ
+	float fireInterval = 500;		// 発射間隔（mili秒）
+	float BarafireInterval = 450;	// 発射間隔（mili秒）
+	float fireTimer = 0.0f;			// 発射間隔（mili秒）
+	float BarafireTimer = 0.0f;		// 発射間隔（mili秒）
 
+
+	//ベクトル２はx,y座標をまとめて管理するためのもの
+	VECTOR2* BossGetPosition() { return m_BossPosition; }
+
+	VECTOR2* BossBuiGetPosition() { return m_Boss_BuiPosition; }
+
+	//Vector2とはX, Y の2成分で構成される情報である
+
+
+	//荒田先生のコードに書いてあったもの
 	std::vector<CBoss::SlowWay> SlowWayShots;
 
 	std::vector<CBoss::WayShot> WayShots;
 
 	std::vector<CBoss::Baramaki> BaraShots;
+
+
 
 	//ボスの一部
 	CImage* m_pBoss_buiImg;
@@ -142,4 +163,14 @@ public:
 	CImage* m_pBossGazi;
 
 	int m_RightLeft;
+
+
+
+	//ボスのポジション　x,y座標を同時に
+	VECTOR2* m_BossPosition; // m_BossPosition を定義
+
+
+	//ボスの一部　x,y座標を同時に
+	VECTOR2* m_Boss_BuiPosition;//m_Boss_BuiPosition を定義
+
 };

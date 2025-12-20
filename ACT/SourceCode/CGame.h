@@ -106,8 +106,13 @@ private:
 	CImage*		m_pSPGeagImg;   //必殺ゲージ
 	CImage*		m_pEnemyImg;	//敵画像.
 	CImage*     m_pEnemy2Img;	//敵画像.
+
+	//ボス本体
 	CImage*		m_pBOSSEnemyImg;
+	//ボスの一部
 	CImage*     m_pBOSSHandImg;
+
+
 	CImage*		m_pPlayerImg;	//プレイヤー画像.
 	CImage*		m_pStageImg;	//ステージ画像.
 	CImage*     m_pscoreImg;	//スコア画像.
@@ -123,7 +128,11 @@ private:
 	CEnemy*		m_pEnemy;	//エネミー.
 	CEnemy2*	m_pEnemy2;
 	CEnemy3* m_pEnemy3;
+
+
 	CBoss* m_pBoss;
+
+
 	//-----ステージ-----.
 	CStage*		m_pStage;
 	//----- カメラ ----.
