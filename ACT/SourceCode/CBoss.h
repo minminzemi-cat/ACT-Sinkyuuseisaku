@@ -24,6 +24,18 @@ public:
 	static const int B_MAX = 1;			//bossの最大数
 	 int B_HP = 200;			//ボスのHP
 
+
+
+	 //ボスの体力が３０％以上の時、時機を遅くするため弾を打って、普通の撃ってを繰り返す列挙
+	 enum enBossTuzyou
+	 {
+		 taiki,//何もしない
+		 osokunaru,//時機を遅くする玉を打つ
+		 attak,	//普通のWay弾を撃つ
+
+
+	 };
+
 	 //ボスの一部を降らせて、空中で止めてバラマキ弾を打つ
 	 enum enBossHurase
 	 {

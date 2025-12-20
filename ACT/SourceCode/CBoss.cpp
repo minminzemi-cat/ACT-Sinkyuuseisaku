@@ -177,7 +177,7 @@ void CBoss::BaraDraw(CCamera* pCamera)
 }
  
 
-//-----------描画--------------------
+//---------ボスの一部描画--------------------
 
 void CBoss::Draw(CCamera*  pCamera)
 {
@@ -190,14 +190,17 @@ void CBoss::Draw(CCamera*  pCamera)
     {
     case enBossHurase::taiki:   //待機
 
-       //ボスの一部を描画する
+
+    //この｛はcaseラベルのせいでDispPosが初期化されないらしいから入れた
+    {
+        //ボスの一部を描画する
         m_FrameSplit.w = 113;
         m_FrameSplit.h = 94;
         m_FrameSplit.x = 0;
         m_FrameSplit.y = 0;
 
-        m_Boss_BuiPosition->x = m_Boss_bui.x;
-        m_Boss_BuiPosition->y = m_Boss_bui.y;
+        m_Boss_BuiPosition->x = m_Boss.x + 70;
+        m_Boss_BuiPosition->y = m_Boss.y;
         VECTOR2 DispPos1 = pCamera->CalcToPositionInCamera(m_Boss_BuiPosition, &m_FrameSplit);
 
         m_bossIMG->TransBlt(
@@ -210,7 +213,23 @@ void CBoss::Draw(CCamera*  pCamera)
 
 
 
+        m_Boss_BuiPosition->x = m_Boss.x + 170;
+        m_Boss_BuiPosition->y = m_Boss.y;
+        VECTOR2 DispPos2 = pCamera->CalcToPositionInCamera(m_Boss_BuiPosition, &m_FrameSplit);
+
+        m_bossIMG->TransBlt(
+            DispPos2.x,
+            DispPos2.y,
+            m_FrameSplit.w,
+            m_FrameSplit.h,
+            m_FrameSplit.x,
+            m_FrameSplit.y);
+
+
         break;
+    }
+
+
 
     //ｙ座標が下に移動する処理
     case enBossHurase::hurase:  //降らせる
@@ -272,7 +291,11 @@ void CBoss::ZDraw(HDC m_hMemDC)
 
 }
 
+
+
+//-----------------------------------
 //動作処理
+//-------------------------------------
 void CBoss::Update()
 {
     //秒ごとに処理ができるようにするための変数
@@ -296,6 +319,7 @@ void CBoss::Update()
             m_RightLeft = -1.f;
         }
 
+        //左に行く
         if (m_Boss.x <= -100)
         {
             m_RightLeft = 1.f;
