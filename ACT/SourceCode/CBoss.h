@@ -137,6 +137,12 @@ public:
 
 	//ボス本体を描画する関数
 	void ZDraw(CCamera* pCamera);
+
+	//ボスの一部の描画
+	void XDraw(CCamera* pCamera);
+
+	//ボスの一部の描画
+	void RDraw(CCamera* pCamera);
 	
 
 	CHARA m_Boss;

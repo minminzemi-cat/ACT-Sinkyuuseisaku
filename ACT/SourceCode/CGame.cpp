@@ -665,6 +665,10 @@ void CGame::Draw()
 		//ボスの一部と攻撃を描画
 		m_pBoss->Draw(m_pCamera);
 
+		m_pBoss->XDraw(m_pCamera);
+
+		m_pBoss->RDraw(m_pCamera);
+
 	
 
 		//必殺ショット画像

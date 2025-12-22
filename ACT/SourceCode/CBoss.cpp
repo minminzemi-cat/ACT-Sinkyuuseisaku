@@ -31,6 +31,7 @@ void CBoss::InitializeGame()
     m_Boss.x = 300;
     m_Boss.y = 100;
 
+   
     m_BossPosition->x = 300;
     m_BossPosition->y = 100;
 }
@@ -258,37 +259,8 @@ void CBoss::Draw(CCamera*  pCamera)
         {
         case enBossHurase::taiki:   //待機
 
-            //ボスの一部を描画する
-            m_FrameSplit.w = 113;
-            m_FrameSplit.h = 94;
-            m_FrameSplit.x = 0;
-            m_FrameSplit.y = 0;
+           
 
-            m_Boss_BuiPosition->x = m_Boss_bui.x;
-            m_Boss_BuiPosition->y = m_Boss_bui.y;
-            //VECTOR2 DispPos1 = pCamera->CalcToPositionInCamera(m_Boss_BuiPosition, &m_FrameSplit);
-
-            m_pbossHandImg->TransBlt(
-                m_Boss_BuiPosition->x,
-                m_Boss_BuiPosition->y,
-                m_FrameSplit.w,
-                m_FrameSplit.h,
-                m_FrameSplit.x,
-                m_FrameSplit.y);
-
-
-
-        m_Boss_BuiPosition->x = m_Boss.x + 170;
-        m_Boss_BuiPosition->y = m_Boss.y;
-        VECTOR2 DispPos2 = pCamera->CalcToPositionInCamera(m_Boss_BuiPosition, &m_FrameSplit);
-
-        m_bossIMG->TransBlt(
-            DispPos2.x,
-            DispPos2.y,
-            m_FrameSplit.w,
-            m_FrameSplit.h,
-            m_FrameSplit.x,
-            m_FrameSplit.y);
 
 
             break;
@@ -374,6 +346,54 @@ void CBoss::ZDraw(CCamera* pCamera)
    
 }
 
+void CBoss::XDraw(CCamera* pCamera)
+{
+
+    //ボスの一部を描画する
+    m_FrameSplit.w = 113;
+    m_FrameSplit.h = 94;
+    m_FrameSplit.x = 0;
+    m_FrameSplit.y = 0;
+
+
+    //いい位置になるよう調整
+    m_Boss_bui.x = m_Boss.x + 170;
+    m_Boss_bui.y = m_Boss.y + 70;
+
+   
+    m_pbossHandImg->TransBlt(
+        m_Boss_bui.x,
+        m_Boss_bui.y,
+        m_FrameSplit.w,
+        m_FrameSplit.h,
+        m_FrameSplit.x,
+        m_FrameSplit.y);
+
+}
+
+void CBoss::RDraw(CCamera* pCamera)
+{
+
+    //ボスの一部を描画する
+    m_FrameSplit.w = 113;
+    m_FrameSplit.h = 94;
+    m_FrameSplit.x = 0;
+    m_FrameSplit.y = 0;
+
+   
+    m_Boss_bui.x = m_Boss.x + 70;
+    m_Boss_bui.y = m_Boss.y + 70;
+
+
+    m_pbossHandImg->TransBlt(
+        m_Boss_bui.x,
+        m_Boss_bui.y,
+        m_FrameSplit.w,
+        m_FrameSplit.h,
+        m_FrameSplit.x,
+        m_FrameSplit.y);
+
+}
 
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
