@@ -108,9 +108,11 @@ private:
 	CImage*     m_pEnemy2Img;	//敵画像.
 
 	//ボス本体
-	CImage*		m_pBOSSEnemyImg;
+	CImage*		m_pbossImg;
 	//ボスの一部
-	CImage*     m_pBOSSHandImg;
+	CImage*		m_pbossHandImg;
+
+	CImage* m_pbossshotImg;
 
 
 	CImage*		m_pPlayerImg;	//プレイヤー画像.

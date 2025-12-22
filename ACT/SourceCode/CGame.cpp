@@ -23,7 +23,8 @@ CGame::CGame( GameWindow* pGameWnd )
 	, m_pStageImg	( nullptr )
 	, m_pEExprotionImg(nullptr)
 	, m_pExprotionImg(nullptr)
-	, m_pBOSSEnemyImg(nullptr)
+	, m_pbossImg	(nullptr)
+	, m_pbossHandImg(nullptr)
 	, m_Player		()
 	, m_pPlayer		( nullptr )
 	, m_pEnemy		( nullptr )
@@ -120,9 +121,11 @@ bool CGame::Create()
 		//敵画像2のインスタンス生成.
 		m_pEnemy2Img = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
-		m_pBOSSEnemyImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+		m_pbossImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
-		m_pBOSSHandImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+		m_pbossHandImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+
+		m_pbossshotImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 		//プライヤー爆発
 		m_pEExprotionImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 	}
@@ -186,9 +189,11 @@ bool CGame::Create()
 		//敵画像の読み込み.
 		if (m_pEnemyImg->LoadBmp("Data\\Image\\cha.bmp") == false)    return false;
 		//敵画像の読み込み.
-		if (m_pBOSSEnemyImg->LoadBmp("Data\\Image\\cha.bmp") == false)    return false;
+		if (m_pbossImg->LoadBmp("Data\\Image\\boss.bmp") == false)    return false;
 			//敵画像の読み込み.
-		if (m_pBOSSHandImg->LoadBmp("Data\\Image\\cha.bmp") == false)    return false;
+		if (m_pbossHandImg->LoadBmp("Data\\Image\\cha.bmp") == false)    return false;
+
+		if(m_pbossshotImg->LoadBmp("Data\\Image\\cha.bmp") == false)	return false;
 		
 		//敵画像の読み込み2.
 		if (m_pEnemy2Img->LoadBmp("Data\\Image\\cha.bmp") == false)    return false;
@@ -260,9 +265,9 @@ bool CGame::Create()
 
 	//--------------ボスのインスタンス---------------
 	m_pBoss = new CBoss();
-	m_pBoss->SetImageBoss(m_pBOSSEnemyImg);
-	m_pBoss->SetImageBOSSHand(m_pBOSSHandImg);
-
+	m_pBoss->SetImageBoss(m_pbossImg);
+	m_pBoss->SetImageBOSSHand(m_pbossHandImg);
+	m_pBoss->SetImageShot(m_pbossshotImg);
 
 	//ステージのインスタンス生成.
 	m_pStage = new CStage();
@@ -328,8 +333,9 @@ void CGame::Destroy()
 	SAFE_DELETE( m_pCharaImg );
 	SAFE_DELETE( m_pBackImg  );
 
-	SAFE_DELETE(m_pBOSSEnemyImg);
-	SAFE_DELETE(m_pBOSSHandImg);
+	SAFE_DELETE(m_pbossImg);
+	SAFE_DELETE(m_pbossHandImg);
+	SAFE_DELETE(m_pbossshotImg);
 
 
 	SAFE_DELETE(m_pscoreImg);
@@ -380,6 +386,8 @@ void CGame::Update()
 			}
 		}
 
+
+		//ゲームメイン
 		case enScene::GameMain:
 		{
 
@@ -620,11 +628,14 @@ void CGame::Draw()
 
 		m_Exc->DrawShotKen(m_pCamera);
 
-	/*	m_pBoss->ZDraw(0);
 
-		m_pBoss->WayDraw();
+		//ボス本体の描画
+		m_pBoss->ZDraw(m_pCamera);
 
-		m_pBoss->BaraDraw();*/
+		//ボスの一部と攻撃を描画
+		m_pBoss->Draw(m_pCamera);
+
+	
 
 		//必殺ショット画像
 		m_ppshot->DrawSpecialmove(m_pCamera);

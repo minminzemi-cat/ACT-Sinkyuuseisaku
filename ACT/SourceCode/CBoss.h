@@ -68,12 +68,16 @@ public:
 		float zx, zy;   // 位置
 		float vx, vy; // 速度 (座標/秒)
 	};
+
+	//画像読み込み
 	void SetImageBoss(CImage* pImg) {m_bossIMG = pImg; }
-	void SetImageBOSSHand(CImage* pImg) { m_subboss = pImg; }
+	void SetImageBOSSHand(CImage* pImg) { m_pbossHandImg = pImg; }
+	void SetImageShot(CImage* pImg) { m_pbossshotImg = pImg; }
 public:
 
 	CImage* m_bossIMG;
-	CImage* m_subboss;
+	CImage* m_pbossHandImg;
+	CImage* m_pbossshotImg;
 
 	//初期化（リセット）
 	void InitializeGame();
@@ -94,14 +98,14 @@ public:
 
 
 
-	//自機をおそくするway描画
-	void SlowDraw(CCamera* pCamera);
+	//自機をおそくするway
+	void SlowUpdate();
 
-	//普通のway描画
-	void WayDraw(CCamera* pCamera);
+	//普通のway
+	void WayUpdate();
 
-	//ボスの一部から発射される、ばらまき描画
-	void BaraDraw(CCamera* pCamera);
+	//ボスの一部から発射される、ばらまき
+	void BaraUpdate();
 
 	
 	//ボスが左右に動いたりするための処理
@@ -114,7 +118,7 @@ public:
 	
 
 	//ボス本体を描画する関数
-	void ZDraw(HDC m_hMemDC);
+	void ZDraw(CCamera* pCamera);
 	
 
 	CHARA m_Boss;
@@ -126,6 +130,8 @@ public:
 	enBossHurase m_BossHurase;
 
 
+	int bosstime = 0;
+
 	int x;		//x座標
 	int y;		//ｙ座標
 	int state;	//状態
@@ -134,6 +140,16 @@ public:
 	float BarafireInterval = 450;	// 発射間隔（mili秒）
 	float fireTimer = 0.0f;			// 発射間隔（mili秒）
 	float BarafireTimer = 0.0f;		// 発射間隔（mili秒）
+
+	
+	float m_bsx[BS_MAX];
+	float m_bsy[BS_MAX];
+
+	bool		m_bshotFlag[BS_MAX];
+
+	int D;
+
+	VECTOR2 shotpos;
 
 
 	//ベクトル２はx,y座標をまとめて管理するためのもの
