@@ -24,6 +24,18 @@ public:
 	static const int B_MAX = 1;			//bossの最大数
 	 int B_HP = 200;			//ボスのHP
 
+
+	 enum enBossState
+	 {
+		 Leving,	//生きている
+		 Ded,		//死んでる
+
+
+	 };
+
+
+
+
 	 //ボスの一部を降らせて、空中で止めてバラマキ弾を打つ
 	 enum enBossHurase
 	 {
@@ -73,11 +85,17 @@ public:
 	void SetImageBoss(CImage* pImg) {m_bossIMG = pImg; }
 	void SetImageBOSSHand(CImage* pImg) { m_pbossHandImg = pImg; }
 	void SetImageShot(CImage* pImg) { m_pbossshotImg = pImg; }
+	
+	//爆発の画像読込
+	void SetImageBom(CImage* pImg) { m_pbossBomImg = pImg; }
+
 public:
 
+	//画像の定義
 	CImage* m_bossIMG;
 	CImage* m_pbossHandImg;
 	CImage* m_pbossshotImg;
+	CImage* m_pbossBomImg;
 
 	//初期化（リセット）
 	void InitializeGame();
@@ -152,11 +170,15 @@ public:
 	VECTOR2 shotpos;
 
 
+	void HIT();
+
 	//ベクトル２はx,y座標をまとめて管理するためのもの
 	VECTOR2* BossGetPosition() { return m_BossPosition; }
 
 	VECTOR2* BossBuiGetPosition() { return m_Boss_BuiPosition; }
 
+    
+    int m_bossState; // ボスの状態を管理するメンバ変数
 	//Vector2とはX, Y の2成分で構成される情報である
 
 
@@ -169,11 +191,7 @@ public:
 
 
 
-	//ボスの一部
-	CImage* m_pBoss_buiImg;
 
-	//ボス本体
-	CImage* m_pZBossImg;
 
 	//ボスのHPゲージを作らないといけない
 	CImage* m_pBossGazi;
@@ -181,7 +199,9 @@ public:
 	int m_RightLeft;
 
 
-
+	bool m_BossState;
+    
+    
 	//ボスのポジション　x,y座標を同時に
 	VECTOR2* m_BossPosition; // m_BossPosition を定義
 

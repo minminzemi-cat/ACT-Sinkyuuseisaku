@@ -188,13 +188,22 @@ bool CGame::Create()
 	{
 		//“G‰æ‘œ‚Ì“Ç‚Ýž‚Ý.
 		if (m_pEnemyImg->LoadBmp("Data\\Image\\cha.bmp") == false)    return false;
+		
+		
+		
+		
+		
 		//“G‰æ‘œ‚Ì“Ç‚Ýž‚Ý.
 		if (m_pbossImg->LoadBmp("Data\\Image\\boss.bmp") == false)    return false;
-			//“G‰æ‘œ‚Ì“Ç‚Ýž‚Ý.
-		if (m_pbossHandImg->LoadBmp("Data\\Image\\cha.bmp") == false)    return false;
+			
+		//“G‰æ‘œ‚Ì“Ç‚Ýž‚Ý.
+		if (m_pbossHandImg->LoadBmp("Data\\Image\\mid.bmp") == false)    return false;
 
 		if(m_pbossshotImg->LoadBmp("Data\\Image\\cha.bmp") == false)	return false;
 		
+
+
+
 		//“G‰æ‘œ‚Ì“Ç‚Ýž‚Ý2.
 		if (m_pEnemy2Img->LoadBmp("Data\\Image\\cha.bmp") == false)    return false;
 	   //ƒGƒlƒ~[”š”­‰æ‘œ‚Ì“Ç‚Ýž‚Ý
@@ -559,6 +568,27 @@ void CGame::Update()
 					//}
 			}
 			
+
+			
+			if (m_pBoss->m_BossState == m_pBoss->enBossState::Leving)
+			{
+
+				////ƒ{ƒX‚ÆŒ•‚Ì“–‚½‚è”»’è
+				//if (m_Hantei->collisionDetection(m_Exc->GetKenPosition().x, m_Exc->GetKenPosition().y, 100, 100,
+				//	m_pBoss->BossGetPosition()->x, m_pBoss->BossGetPosition()->y, 356, 356)) {
+
+				//	
+				//	if (m_Exc->GetIAI() == true)
+				//	{
+
+
+				//		m_Exc->SPHIT();
+				//	}
+				//}
+			}
+
+
+
 			
 
 

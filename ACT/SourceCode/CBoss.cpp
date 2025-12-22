@@ -24,6 +24,19 @@ CBoss::~CBoss()
 }
 
 
+
+//初期化（リセット）
+void CBoss::InitializeGame()
+{
+    m_Boss.x = 300;
+    m_Boss.y = 100;
+
+    m_BossPosition->x = 300;
+    m_BossPosition->y = 100;
+}
+
+
+
 constexpr float PI = 3.14159265358979323846f;
 
 // --- 自機を遅くするWay弾発射 ---
@@ -78,14 +91,6 @@ void CBoss::bara(int num, float speed) {
 
         BaraShots.push_back(b);
     }
-}
-
-//初期化（リセット）
-void CBoss::InitializeGame()
-{
-    m_Boss.x = 300;
-    m_Boss.y = 100;
-
 }
 
 
@@ -183,35 +188,11 @@ void CBoss::BaraUpdate()
 
 void CBoss::Draw(CCamera*  pCamera)
 {
-
-    //ばらまき弾の描画
-    for (int i = 0; i < BaraShots.size(); i++) {
-            D++;
-            m_FrameSplit.w = 32;
-            m_FrameSplit.h = 32;
-            m_FrameSplit.x = 64;
-            m_FrameSplit.y = 64 * 2;
-
-            VECTOR2 shotpos;
-            shotpos.x = BaraShots[i].zx;
-            shotpos.y = BaraShots[i].zy;
-
-
-            VECTOR2 DispPos = pCamera->CalcToPositionInCamera(&shotpos, &m_FrameSplit);
-
-            m_pbossshotImg->TransBlt(
-                DispPos.x,
-                DispPos.y,
-                m_FrameSplit.w,
-                m_FrameSplit.h,
-                m_FrameSplit.x,
-                m_FrameSplit.y);
-        
-    }
+    if(m_BossState==enBossState::Leving)
+    { 
     
     //way弾の描画
     for (int i = 0; i < WayShots.size(); i++) {
-        D++;
         m_FrameSplit.w = 32;
         m_FrameSplit.h = 32;
         m_FrameSplit.x = 64;
@@ -222,11 +203,11 @@ void CBoss::Draw(CCamera*  pCamera)
         shotpos.y = WayShots[i].wy;
 
 
-        VECTOR2 DispPos = pCamera->CalcToPositionInCamera(&shotpos, &m_FrameSplit);
+        VECTOR2 DispPos5 = pCamera->CalcToPositionInCamera(&shotpos, &m_FrameSplit);
 
         m_pbossshotImg->TransBlt(
-            DispPos.x,
-            DispPos.y,
+            DispPos5.x,
+            DispPos5.y,
             m_FrameSplit.w,
             m_FrameSplit.h,
             m_FrameSplit.x,
@@ -236,7 +217,6 @@ void CBoss::Draw(CCamera*  pCamera)
 
     //スローway弾の描画
     for (int i = 0; i < SlowWayShots.size(); i++) {
-        D++;
         m_FrameSplit.w = 32;
         m_FrameSplit.h = 32;
         m_FrameSplit.x = 64;
@@ -247,20 +227,29 @@ void CBoss::Draw(CCamera*  pCamera)
         shotpos.y = SlowWayShots[i].qy;
 
 
-        VECTOR2 DispPos = pCamera->CalcToPositionInCamera(&shotpos, &m_FrameSplit);
+        VECTOR2 DispPos6 = pCamera->CalcToPositionInCamera(&shotpos, &m_FrameSplit);
 
         m_pbossshotImg->TransBlt(
-            DispPos.x,
-            DispPos.y,
+            DispPos6.x,
+            DispPos6.y,
             m_FrameSplit.w,
             m_FrameSplit.h,
             m_FrameSplit.x,
             m_FrameSplit.y);
-
     }
 
+    
+    }
 
+    //*****************************************************************:
+    // **********************************************************************
+    // 
+    // 
     //ボスの体力が３０％以下のとき
+    //
+    //
+    //*********************************************************************
+    //***************************************************************************
     if (B_HP <= B_HP * 0.3)
     {
 
@@ -309,8 +298,29 @@ void CBoss::Draw(CCamera*  pCamera)
             //ばらまき弾打つ
         case enBossHurase::utima:       //弾を打つ  
 
-            //ばらまき描画
-            CBoss::BaraUpdate();
+            //ばらまき弾の描画
+            for (int i = 0; i < BaraShots.size(); i++) {
+                m_FrameSplit.w = 32;
+                m_FrameSplit.h = 32;
+                m_FrameSplit.x = 64;
+                m_FrameSplit.y = 64 * 2;
+
+                VECTOR2 shotpos;
+                shotpos.x = BaraShots[i].zx;
+                shotpos.y = BaraShots[i].zy;
+
+
+                VECTOR2 DispPos4 = pCamera->CalcToPositionInCamera(&shotpos, &m_FrameSplit);
+
+                m_pbossshotImg->TransBlt(
+                    DispPos4.x,
+                    DispPos4.y,
+                    m_FrameSplit.w,
+                    m_FrameSplit.h,
+                    m_FrameSplit.x,
+                    m_FrameSplit.y);
+
+            }
 
             break;
 
@@ -340,10 +350,6 @@ void CBoss::ZDraw(CCamera* pCamera)
     m_FrameSplit.x = 0;
     m_FrameSplit.y = 0;
 
-    /*m_BossPosition->x = m_Boss.x;
-    m_BossPosition->y = m_Boss.y;
-    VECTOR2 DispPos3 = pCamera->CalcToPositionInCamera(m_BossPosition, &m_FrameSplit);*/
-
     m_bossIMG->TransBlt(
         m_Boss.x,
         m_Boss.y,
@@ -355,7 +361,19 @@ void CBoss::ZDraw(CCamera* pCamera)
    
 }
 
-//動作処理
+
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// 
+// 
+//動作処理   UPDATE
+// 
+// 
+//+++++++++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
 void CBoss::Update()
 {
     //秒ごとに処理ができるようにするための変数
@@ -363,7 +381,9 @@ void CBoss::Update()
     int time=0;
     time++;
 
-   
+    if (m_BossState == enBossState::Leving)
+    { 
+
     //左右に動くようにする
 
     //何秒ごとに
@@ -387,6 +407,13 @@ void CBoss::Update()
 
         //最初は右に動く
         m_Boss.x += m_RightLeft * B_SPD;
+
+        shotpos.x = m_Boss.x;
+        shotpos.y = m_Boss.y;
+
+        //
+        /*m_BossPosition->x =m_Boss.x;
+        m_BossPosition->y = m_Boss.y;*/
 
         bosstime++;
 
@@ -415,8 +442,13 @@ void CBoss::Update()
 
     }
 
-
+    ///////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////
+    // 
     //ボスの体力が30％以下になったら************
+    //
+    //
+    ////////////////////////////////////////////////////////////
     
     if (B_HP <= B_HP * 0.3)
 
@@ -447,6 +479,7 @@ void CBoss::Update()
             //ばらまき弾打つ
         case enBossHurase::utima:
             if (time / 60 == 0) {
+                CBoss::BaraUpdate();
 
                 m_BossHurase = enBossHurase::modorima;
             }
@@ -462,7 +495,7 @@ void CBoss::Update()
             }
             break;
         }
-
+    }
     }
 }
 
