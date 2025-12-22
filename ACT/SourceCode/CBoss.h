@@ -25,16 +25,16 @@ public:
 	 int B_HP = 200;			//ボスのHP
 
 
-
-	 //ボスの体力が３０％以上の時、時機を遅くするため弾を打って、普通の撃ってを繰り返す列挙
-	 enum enBossTuzyou
+	 enum enBossState
 	 {
-		 taiki,//何もしない
-		 osokunaru,//時機を遅くする玉を打つ
-		 attak,	//普通のWay弾を撃つ
+		 Leving,	//生きている
+		 Ded,		//死んでる
 
 
 	 };
+
+
+
 
 	 //ボスの一部を降らせて、空中で止めてバラマキ弾を打つ
 	 enum enBossHurase
@@ -80,12 +80,22 @@ public:
 		float zx, zy;   // 位置
 		float vx, vy; // 速度 (座標/秒)
 	};
+
+	//画像読み込み
 	void SetImageBoss(CImage* pImg) {m_bossIMG = pImg; }
-	void SetImageBOSSHand(CImage* pImg) { m_subboss = pImg; }
+	void SetImageBOSSHand(CImage* pImg) { m_pbossHandImg = pImg; }
+	void SetImageShot(CImage* pImg) { m_pbossshotImg = pImg; }
+	
+	//爆発の画像読込
+	void SetImageBom(CImage* pImg) { m_pbossBomImg = pImg; }
+
 public:
 
+	//画像の定義
 	CImage* m_bossIMG;
-	CImage* m_subboss;
+	CImage* m_pbossHandImg;
+	CImage* m_pbossshotImg;
+	CImage* m_pbossBomImg;
 
 	//初期化（リセット）
 	void InitializeGame();
@@ -106,14 +116,14 @@ public:
 
 
 
-	//自機をおそくするway描画
-	void SlowDraw(CCamera* pCamera);
+	//自機をおそくするway
+	void SlowUpdate();
 
-	//普通のway描画
-	void WayDraw(CCamera* pCamera);
+	//普通のway
+	void WayUpdate();
 
-	//ボスの一部から発射される、ばらまき描画
-	void BaraDraw(CCamera* pCamera);
+	//ボスの一部から発射される、ばらまき
+	void BaraUpdate();
 
 	
 	//ボスが左右に動いたりするための処理
@@ -126,7 +136,7 @@ public:
 	
 
 	//ボス本体を描画する関数
-	void ZDraw(HDC m_hMemDC);
+	void ZDraw(CCamera* pCamera);
 	
 
 	CHARA m_Boss;
@@ -138,6 +148,8 @@ public:
 	enBossHurase m_BossHurase;
 
 
+	int bosstime = 0;
+
 	int x;		//x座標
 	int y;		//ｙ座標
 	int state;	//状態
@@ -147,12 +159,26 @@ public:
 	float fireTimer = 0.0f;			// 発射間隔（mili秒）
 	float BarafireTimer = 0.0f;		// 発射間隔（mili秒）
 
+	
+	float m_bsx[BS_MAX];
+	float m_bsy[BS_MAX];
+
+	bool		m_bshotFlag[BS_MAX];
+
+	int D;
+
+	VECTOR2 shotpos;
+
+
+	void HIT();
 
 	//ベクトル２はx,y座標をまとめて管理するためのもの
 	VECTOR2* BossGetPosition() { return m_BossPosition; }
 
 	VECTOR2* BossBuiGetPosition() { return m_Boss_BuiPosition; }
 
+    
+    int m_bossState; // ボスの状態を管理するメンバ変数
 	//Vector2とはX, Y の2成分で構成される情報である
 
 
@@ -165,11 +191,7 @@ public:
 
 
 
-	//ボスの一部
-	CImage* m_pBoss_buiImg;
 
-	//ボス本体
-	CImage* m_pZBossImg;
 
 	//ボスのHPゲージを作らないといけない
 	CImage* m_pBossGazi;
@@ -177,7 +199,9 @@ public:
 	int m_RightLeft;
 
 
-
+	bool m_BossState;
+    
+    
 	//ボスのポジション　x,y座標を同時に
 	VECTOR2* m_BossPosition; // m_BossPosition を定義
 

@@ -23,6 +23,20 @@ CBoss::~CBoss()
 {
 }
 
+
+
+//初期化（リセット）
+void CBoss::InitializeGame()
+{
+    m_Boss.x = 300;
+    m_Boss.y = 100;
+
+    m_BossPosition->x = 300;
+    m_BossPosition->y = 100;
+}
+
+
+
 constexpr float PI = 3.14159265358979323846f;
 
 // --- 自機を遅くするWay弾発射 ---
@@ -79,21 +93,13 @@ void CBoss::bara(int num, float speed) {
     }
 }
 
-//初期化（リセット）
-void CBoss::InitializeGame()
-{
-    m_Boss.x = 60;
-    m_Boss.y = 30;
-
-}
-
 
 // Δt計算
 float dt = 1000 / FPS / 2 / 2; // 秒
 
 
 //自機を遅くするway
-void CBoss::SlowDraw(CCamera* pCamera) {
+void CBoss::SlowUpdate() {
    
 
     // 遅くなれWay描画 ---
@@ -123,7 +129,7 @@ void CBoss::SlowDraw(CCamera* pCamera) {
 
 
 //普通のway
-void CBoss::WayDraw(CCamera* pCamera)
+void CBoss::WayUpdate()
 {
     // --- Way描画 ---
     fireTimer += dt;
@@ -153,7 +159,7 @@ void CBoss::WayDraw(CCamera* pCamera)
 
 
 //ボスの一部から発射される、ばらまき描画
-void CBoss::BaraDraw(CCamera* pCamera)
+void CBoss::BaraUpdate()
 {
     // バラマキ弾発射
     BarafireTimer += dt;
@@ -177,39 +183,98 @@ void CBoss::BaraDraw(CCamera* pCamera)
 }
  
 
-//---------ボスの一部描画--------------------
+
+//-----------描画--------------------
 
 void CBoss::Draw(CCamera*  pCamera)
 {
-
+    if(m_BossState==enBossState::Leving)
+    { 
     
-    
+    //way弾の描画
+    for (int i = 0; i < WayShots.size(); i++) {
+        m_FrameSplit.w = 32;
+        m_FrameSplit.h = 32;
+        m_FrameSplit.x = 64;
+        m_FrameSplit.y = 64 * 2;
 
-    //ボスの降らせ攻撃の状態による処理
-    switch (m_BossHurase)
-    {
-    case enBossHurase::taiki:   //待機
+        VECTOR2 shotpos;
+        shotpos.x = WayShots[i].wx;
+        shotpos.y = WayShots[i].wy;
 
 
-    //この｛はcaseラベルのせいでDispPosが初期化されないらしいから入れた
-    {
-        //ボスの一部を描画する
-        m_FrameSplit.w = 113;
-        m_FrameSplit.h = 94;
-        m_FrameSplit.x = 0;
-        m_FrameSplit.y = 0;
+        VECTOR2 DispPos5 = pCamera->CalcToPositionInCamera(&shotpos, &m_FrameSplit);
 
-        m_Boss_BuiPosition->x = m_Boss.x + 70;
-        m_Boss_BuiPosition->y = m_Boss.y;
-        VECTOR2 DispPos1 = pCamera->CalcToPositionInCamera(m_Boss_BuiPosition, &m_FrameSplit);
-
-        m_bossIMG->TransBlt(
-            DispPos1.x,
-            DispPos1.y,
+        m_pbossshotImg->TransBlt(
+            DispPos5.x,
+            DispPos5.y,
             m_FrameSplit.w,
             m_FrameSplit.h,
             m_FrameSplit.x,
             m_FrameSplit.y);
+
+    }
+
+    //スローway弾の描画
+    for (int i = 0; i < SlowWayShots.size(); i++) {
+        m_FrameSplit.w = 32;
+        m_FrameSplit.h = 32;
+        m_FrameSplit.x = 64;
+        m_FrameSplit.y = 64 * 2;
+
+        VECTOR2 shotpos;
+        shotpos.x = SlowWayShots[i].qx;
+        shotpos.y = SlowWayShots[i].qy;
+
+
+        VECTOR2 DispPos6 = pCamera->CalcToPositionInCamera(&shotpos, &m_FrameSplit);
+
+        m_pbossshotImg->TransBlt(
+            DispPos6.x,
+            DispPos6.y,
+            m_FrameSplit.w,
+            m_FrameSplit.h,
+            m_FrameSplit.x,
+            m_FrameSplit.y);
+    }
+
+    
+    }
+
+    //*****************************************************************:
+    // **********************************************************************
+    // 
+    // 
+    //ボスの体力が３０％以下のとき
+    //
+    //
+    //*********************************************************************
+    //***************************************************************************
+    if (B_HP <= B_HP * 0.3)
+    {
+
+        //ボスの降らせ攻撃の状態による処理
+        switch (m_BossHurase)
+        {
+        case enBossHurase::taiki:   //待機
+
+            //ボスの一部を描画する
+            m_FrameSplit.w = 113;
+            m_FrameSplit.h = 94;
+            m_FrameSplit.x = 0;
+            m_FrameSplit.y = 0;
+
+            m_Boss_BuiPosition->x = m_Boss_bui.x;
+            m_Boss_BuiPosition->y = m_Boss_bui.y;
+            //VECTOR2 DispPos1 = pCamera->CalcToPositionInCamera(m_Boss_BuiPosition, &m_FrameSplit);
+
+            m_pbossHandImg->TransBlt(
+                m_Boss_BuiPosition->x,
+                m_Boss_BuiPosition->y,
+                m_FrameSplit.w,
+                m_FrameSplit.h,
+                m_FrameSplit.x,
+                m_FrameSplit.y);
 
 
 
@@ -226,52 +291,70 @@ void CBoss::Draw(CCamera*  pCamera)
             m_FrameSplit.y);
 
 
-        break;
-    }
+            break;
+
+            //ｙ座標が下に移動する処理
+        case enBossHurase::hurase:  //降らせる
+
+            m_Boss_BuiPosition->y += 2;
+
+            break;
+
+            //空中で止める
+        case enBossHurase::tome:        //空中で止める
+            if (m_Boss_BuiPosition->y >= 500)
+            {
+                m_Boss_BuiPosition->y == 500;
+            }
+            break;
+
+            //ばらまき弾打つ
+        case enBossHurase::utima:       //弾を打つ  
+
+            //ばらまき弾の描画
+            for (int i = 0; i < BaraShots.size(); i++) {
+                m_FrameSplit.w = 32;
+                m_FrameSplit.h = 32;
+                m_FrameSplit.x = 64;
+                m_FrameSplit.y = 64 * 2;
+
+                VECTOR2 shotpos;
+                shotpos.x = BaraShots[i].zx;
+                shotpos.y = BaraShots[i].zy;
 
 
+                VECTOR2 DispPos4 = pCamera->CalcToPositionInCamera(&shotpos, &m_FrameSplit);
 
-    //ｙ座標が下に移動する処理
-    case enBossHurase::hurase:  //降らせる
-   
-        m_Boss_BuiPosition->y += 2;
+                m_pbossshotImg->TransBlt(
+                    DispPos4.x,
+                    DispPos4.y,
+                    m_FrameSplit.w,
+                    m_FrameSplit.h,
+                    m_FrameSplit.x,
+                    m_FrameSplit.y);
 
-        break;
+            }
 
-        //空中で止める
-    case enBossHurase::tome:        //空中で止める
-        if (m_Boss_BuiPosition->y >= 500)
-        {
-            m_Boss_BuiPosition->y == 500;
+            break;
+
+            //元に戻ってくる
+        case enBossHurase::modorima:
+
+            //ボスの一部が空中で止めた座標より下だった場合
+            //
+            while (m_Boss_BuiPosition->y >= 500)
+            {
+                m_Boss_BuiPosition->y -= 2;
+            }
+
+
+            break;
         }
-        break;
-
-        //ばらまき弾打つ
-    case enBossHurase::utima:       //弾を打つ  
-        
-        //ばらまき描画
-        CBoss::BaraDraw(pCamera);
-
-        break;
-
-        //元に戻ってくる
-    case enBossHurase::modorima:
-
-        //ボスの一部が空中で止めた座標より下だった場合
-        //
-        while (m_Boss_BuiPosition->y >= 500)
-        {
-            m_Boss_BuiPosition->y -= 2;
-        }
-       
-
-        break;
     }
-
 }
 
 //ボス本体の描画  
-void CBoss::ZDraw(HDC m_hMemDC)
+void CBoss::ZDraw(CCamera* pCamera)
 {
     //ボス本体の描画
 
@@ -281,27 +364,38 @@ void CBoss::ZDraw(HDC m_hMemDC)
     m_FrameSplit.y = 0;
 
     m_bossIMG->TransBlt(
-        m_BossPosition->x,
-        m_BossPosition->y,
+        m_Boss.x,
+        m_Boss.y,
         m_FrameSplit.w,
         m_FrameSplit.h,
         m_FrameSplit.x,
         m_FrameSplit.y);
 
-
+   
 }
 
 
 
-//-----------------------------------
-//動作処理
-//-------------------------------------
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// 
+// 
+//動作処理   UPDATE
+// 
+// 
+//+++++++++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
 void CBoss::Update()
 {
     //秒ごとに処理ができるようにするための変数
     //谷口君に教えてもらった
-    int aaaaa=0;
-    aaaaa++;
+    int time=0;
+    time++;
+
+    if (m_BossState == enBossState::Leving)
+    { 
 
     //左右に動くようにする
 
@@ -328,10 +422,47 @@ void CBoss::Update()
         //最初は右に動く
         m_Boss.x += m_RightLeft * B_SPD;
 
+        shotpos.x = m_Boss.x;
+        shotpos.y = m_Boss.y;
+
+        //
+        /*m_BossPosition->x =m_Boss.x;
+        m_BossPosition->y = m_Boss.y;*/
+
+        bosstime++;
+
+        
+
+       //ボスの体力が30％以上のとき、一分間このような処理を繰り返す
+            if (bosstime > 600)
+            {
+                bosstime = 0;
+            }
+
+            if (bosstime < 300)
+            {
+            }
+
+            if (bosstime < 600)
+            {
+            }
+
+            CBoss::WayUpdate();
+            CBoss::SlowUpdate();
+
+ 
+
+        //CBoss::Way(4, 15, 1);
+
     }
 
-
+    ///////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////
+    // 
     //ボスの体力が30％以下になったら************
+    //
+    //
+    ////////////////////////////////////////////////////////////
     
     if (B_HP <= B_HP * 0.3)
 
@@ -344,7 +475,7 @@ void CBoss::Update()
             //1秒ごとに次の状態へ
         case enBossHurase::hurase:
 
-            if (aaaaa / 60 == 0) {
+            if (time / 60 == 0) {
                 m_BossHurase = enBossHurase::tome;
             }
 
@@ -352,7 +483,7 @@ void CBoss::Update()
 
             //空中で止める
         case enBossHurase::tome:
-            if (aaaaa / 60 == 0) {
+            if (time / 60 == 0) {
 
                 m_BossHurase = enBossHurase::utima;
             }
@@ -361,7 +492,8 @@ void CBoss::Update()
 
             //ばらまき弾打つ
         case enBossHurase::utima:
-            if (aaaaa / 60 == 0) {
+            if (time / 60 == 0) {
+                CBoss::BaraUpdate();
 
                 m_BossHurase = enBossHurase::modorima;
             }
@@ -370,14 +502,14 @@ void CBoss::Update()
 
             //元に戻ってくる
         case enBossHurase::modorima:
-            if (aaaaa / 60 == 0) {
+            if (time / 60 == 0) {
 
                 m_BossHurase = enBossHurase::hurase;
 
             }
             break;
         }
-
+    }
     }
 }
 
