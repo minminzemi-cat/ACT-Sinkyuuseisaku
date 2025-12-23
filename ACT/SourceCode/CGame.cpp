@@ -193,12 +193,13 @@ bool CGame::Create()
 		
 		
 		
-		//敵画像の読み込み.
+		//ボス画像の読み込み.
 		if (m_pbossImg->LoadBmp("Data\\Image\\boss.bmp") == false)    return false;
 			
-		//敵画像の読み込み.
-		if (m_pbossHandImg->LoadBmp("Data\\Image\\mid.bmp") == false)    return false;
+		//ボスの一部の画像の読み込み.
+		if (m_pbossHandImg->LoadBmp("Data\\Image\\Mine.bmp") == false)    return false;
 
+		//ボスの玉
 		if(m_pbossshotImg->LoadBmp("Data\\Image\\cha.bmp") == false)	return false;
 		
 
@@ -657,6 +658,7 @@ void CGame::Draw()
 		m_ppshot->DrawBomset(m_pCamera);
 
 		m_Exc->DrawShotKen(m_pCamera);
+
 
 
 		//ボス本体の描画

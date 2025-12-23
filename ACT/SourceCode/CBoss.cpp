@@ -129,6 +129,8 @@ void CBoss::SlowUpdate() {
 }
 
 
+
+
 //普通のway
 void CBoss::WayUpdate()
 {
@@ -214,7 +216,7 @@ void CBoss::Draw(CCamera*  pCamera)
             m_FrameSplit.x,
             m_FrameSplit.y);
 
-    }
+        }
 
     //スローway弾の描画
     for (int i = 0; i < SlowWayShots.size(); i++) {
@@ -237,7 +239,7 @@ void CBoss::Draw(CCamera*  pCamera)
             m_FrameSplit.h,
             m_FrameSplit.x,
             m_FrameSplit.y);
-    }
+        }
 
     
     }
@@ -325,6 +327,7 @@ void CBoss::Draw(CCamera*  pCamera)
     }
 }
 
+
 //ボス本体の描画  
 void CBoss::ZDraw(CCamera* pCamera)
 {
@@ -386,7 +389,7 @@ void CBoss::RDraw(CCamera* pCamera)
 
 
     m_pbossHandImg->TransBlt(
-        m_Boss_bui.x,
+        m_Boss_bui. x,
         m_Boss_bui.y,
         m_FrameSplit.w,
         m_FrameSplit.h,

@@ -206,6 +206,8 @@ public:
 
 
 	bool m_BossState;
+
+	int m_Utime;
     
     
 	//ボスのポジション　x,y座標を同時に
