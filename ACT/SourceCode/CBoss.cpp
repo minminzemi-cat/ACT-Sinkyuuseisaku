@@ -50,8 +50,8 @@ void CBoss::SlowWayShot(int slowway, float angleRangeRad, float speed)
         float angle = baseAngle - angleRangeRad / 2.0f + angleRangeRad * t;
 
         CBoss::SlowWay b;
-        b.qx = m_Boss.x * 2 + 90;            //座標
-        b.qy = m_Boss.y * 2 + 280;
+        b.qx = m_Boss.x  + (356 / 2);            //座標 356/2はボスの中心座標を求めている
+        b.qy = m_Boss.y + (356 / 2)+100;
         b.vx = cosf(angle) * speed; //スピード  
         b.vy = sinf(angle) * speed;
 
@@ -99,12 +99,15 @@ void CBoss::bara(int num, float speed) {
 float dt = 1000 / FPS / 2 / 2; // 秒
 
 
+// Δt計算
+float dr = 1000 / FPS /2/2 ; // 秒
+
 //自機を遅くするway
 void CBoss::SlowUpdate() {
    
 
     // 遅くなれWay描画 ---
-    fireTimer += dt;
+    fireTimer += dr;
     if (fireTimer >= fireInterval) {
         fireTimer = 10;
         SlowWayShot(3,30*PI/180,1);
@@ -208,7 +211,7 @@ void CBoss::Draw(CCamera*  pCamera)
 
         VECTOR2 DispPos5 = pCamera->CalcToPositionInCamera(&shotpos, &m_FrameSplit);
 
-        m_pbossshotImg->TransBlt(
+        m_pbossWayshotImg->TransBlt(
             DispPos5.x,
             DispPos5.y,
             m_FrameSplit.w,
@@ -232,7 +235,7 @@ void CBoss::Draw(CCamera*  pCamera)
 
         VECTOR2 DispPos6 = pCamera->CalcToPositionInCamera(&shotpos, &m_FrameSplit);
 
-        m_pbossshotImg->TransBlt(
+        m_pbossSlowshotImg->TransBlt(
             DispPos6.x,
             DispPos6.y,
             m_FrameSplit.w,
@@ -253,7 +256,7 @@ void CBoss::Draw(CCamera*  pCamera)
     //
     //*********************************************************************
     //***************************************************************************
-    if (B_HP <= B_HP * 0.3)
+    if (B_HP <= 1000 * 0.3)
     {
 
         //ボスの降らせ攻撃の状態による処理
@@ -299,7 +302,7 @@ void CBoss::Draw(CCamera*  pCamera)
 
                 VECTOR2 DispPos4 = pCamera->CalcToPositionInCamera(&shotpos, &m_FrameSplit);
 
-                m_pbossshotImg->TransBlt(
+                m_pbossbuiImg->TransBlt(
                     DispPos4.x,
                     DispPos4.y,
                     m_FrameSplit.w,
@@ -428,7 +431,7 @@ void CBoss::Update()
     //画面端に行ったら反対方向にボススピードで動く
 
     //体力が３０％以上のときは左右に動くことを続ける
-    if(B_HP >= B_HP * 0.3)
+    if(B_HP >= 1000 * 0.3)
     {
         //メンバー変数を使うことで値の保持が可能
         if (m_Boss.x >= 270)
@@ -487,7 +490,7 @@ void CBoss::Update()
     //
     ////////////////////////////////////////////////////////////
     
-    if (B_HP <= B_HP * 0.3)
+    if (B_HP <= 1000 * 0.3)
 
     {
         //ボスの降らせ攻撃の状態による処理

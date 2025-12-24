@@ -121,11 +121,19 @@ bool CGame::Create()
 		//敵画像2のインスタンス生成.
 		m_pEnemy2Img = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
+
+		//ボス
+
 		m_pbossImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
 		m_pbossHandImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
-		m_pbossshotImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+		m_pbossWayshotImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+
+		m_pbossSlowshotImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+
+		m_pbossbuiImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+
 		//プライヤー爆発
 		m_pEExprotionImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 	}
@@ -199,9 +207,15 @@ bool CGame::Create()
 		//ボスの一部の画像の読み込み.
 		if (m_pbossHandImg->LoadBmp("Data\\Image\\Mine.bmp") == false)    return false;
 
-		//ボスの玉
-		if(m_pbossshotImg->LoadBmp("Data\\Image\\cha.bmp") == false)	return false;
+		//ボスの玉　way
+		if(m_pbossWayshotImg->LoadBmp("Data\\Image\\cha.bmp") == false)	return false;
 		
+		//ボスの玉 遅くする
+		if (m_pbossSlowshotImg->LoadBmp("Data\\Image\\cha.bmp") == false)	return false;
+
+		//ボスの玉　一部ぁら
+		if (m_pbossbuiImg->LoadBmp("Data\\Image\\cha.bmp") == false)	return false;
+
 
 
 
@@ -277,7 +291,9 @@ bool CGame::Create()
 	m_pBoss = new CBoss();
 	m_pBoss->SetImageBoss(m_pbossImg);
 	m_pBoss->SetImageBOSSHand(m_pbossHandImg);
-	m_pBoss->SetImageShot(m_pbossshotImg);
+	m_pBoss->SetImageShot(m_pbossWayshotImg);
+	m_pBoss->SetImageSlow(m_pbossSlowshotImg);
+	m_pBoss->SetImagebui(m_pbossbuiImg);
 
 	//ステージのインスタンス生成.
 	m_pStage = new CStage();
@@ -345,7 +361,7 @@ void CGame::Destroy()
 
 	SAFE_DELETE(m_pbossImg);
 	SAFE_DELETE(m_pbossHandImg);
-	SAFE_DELETE(m_pbossshotImg);
+	SAFE_DELETE(m_pbossWayshotImg);
 
 
 	SAFE_DELETE(m_pscoreImg);

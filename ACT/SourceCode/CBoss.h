@@ -22,7 +22,7 @@ public:
 	static const int BS_MAX = 3;		//bossの玉の数
 	static const int B_SPD = 1;			//bossの移動速度
 	static const int B_MAX = 1;			//bossの最大数
-	 int B_HP = 200;			//ボスのHP
+	 int B_HP = 1000;			//ボスのHP
 
 
 	 enum enBossState
@@ -84,7 +84,9 @@ public:
 	//画像読み込み
 	void SetImageBoss(CImage* pImg) {m_bossIMG = pImg; }
 	void SetImageBOSSHand(CImage* pImg) { m_pbossHandImg = pImg; }
-	void SetImageShot(CImage* pImg) { m_pbossshotImg = pImg; }
+	void SetImageShot(CImage* pImg) { m_pbossWayshotImg = pImg; }//普通のway
+	void SetImageSlow(CImage* pImg) { m_pbossSlowshotImg = pImg; }//時機を遅くする玉
+	void SetImagebui(CImage* pImg) { m_pbossbuiImg = pImg; }
 	
 	//爆発の画像読込
 	void SetImageBom(CImage* pImg) { m_pbossBomImg = pImg; }
@@ -92,9 +94,20 @@ public:
 public:
 
 	//画像の定義
+	//ボス本体
 	CImage* m_bossIMG;
+	
+	//ボスの一部
 	CImage* m_pbossHandImg;
-	CImage* m_pbossshotImg;
+	//普通のway弾
+	CImage* m_pbossWayshotImg;
+	//時機を遅くする玉
+	
+	CImage* m_pbossSlowshotImg;
+	//ボスの一部から出てくるバラマキ弾の画像
+	CImage* m_pbossbuiImg;
+
+	//ボスが倒された時の爆発
 	CImage* m_pbossBomImg;
 
 	//初期化（リセット）

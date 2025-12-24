@@ -112,8 +112,10 @@ private:
 	//ボスの一部
 	CImage*		m_pbossHandImg;
 
-	CImage* m_pbossshotImg;
-
+	//ボスの弾
+	CImage* m_pbossWayshotImg;
+	CImage* m_pbossSlowshotImg;
+	CImage* m_pbossbuiImg;
 
 	CImage*		m_pPlayerImg;	//プレイヤー画像.
 	CImage*		m_pStageImg;	//ステージ画像.
