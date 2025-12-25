@@ -201,8 +201,8 @@ void CBoss::Draw(CCamera*  pCamera)
     for (int i = 0; i < WayShots.size(); i++) {
         m_FrameSplit.w = 32;
         m_FrameSplit.h = 32;
-        m_FrameSplit.x = 64;
-        m_FrameSplit.y = 64 * 2;
+        m_FrameSplit.x = 0;
+        m_FrameSplit.y = 0;
 
         VECTOR2 shotpos;
         shotpos.x = WayShots[i].wx;
@@ -225,8 +225,8 @@ void CBoss::Draw(CCamera*  pCamera)
     for (int i = 0; i < SlowWayShots.size(); i++) {
         m_FrameSplit.w = 32;
         m_FrameSplit.h = 32;
-        m_FrameSplit.x = 64;
-        m_FrameSplit.y = 64 * 2;
+        m_FrameSplit.x = 0;
+        m_FrameSplit.y = 0;
 
         VECTOR2 shotpos;
         shotpos.x = SlowWayShots[i].qx;
@@ -292,8 +292,8 @@ void CBoss::Draw(CCamera*  pCamera)
             for (int i = 0; i < BaraShots.size(); i++) {
                 m_FrameSplit.w = 32;
                 m_FrameSplit.h = 32;
-                m_FrameSplit.x = 64;
-                m_FrameSplit.y = 64 * 2;
+                m_FrameSplit.x = 0;
+                m_FrameSplit.y = 0;
 
                 VECTOR2 shotpos;
                 shotpos.x = BaraShots[i].zx;

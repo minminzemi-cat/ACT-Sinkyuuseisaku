@@ -208,13 +208,13 @@ bool CGame::Create()
 		if (m_pbossHandImg->LoadBmp("Data\\Image\\Mine.bmp") == false)    return false;
 
 		//ボスの玉　way
-		if(m_pbossWayshotImg->LoadBmp("Data\\Image\\cha.bmp") == false)	return false;
+		if(m_pbossWayshotImg->LoadBmp("Data\\Image\\way.bmp") == false)	return false;
 		
 		//ボスの玉 遅くする
-		if (m_pbossSlowshotImg->LoadBmp("Data\\Image\\cha.bmp") == false)	return false;
+		if (m_pbossSlowshotImg->LoadBmp("Data\\Image\\slow.bmp") == false)	return false;
 
 		//ボスの玉　一部ぁら
-		if (m_pbossbuiImg->LoadBmp("Data\\Image\\cha.bmp") == false)	return false;
+		if (m_pbossbuiImg->LoadBmp("Data\\Image\\BossBui.bmp") == false)	return false;
 
 
 
