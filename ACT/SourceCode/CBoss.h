@@ -27,6 +27,7 @@ public:
 
 	 enum enBossState
 	 {
+		 Wait,      //待機
 		 Leving,	//生きている
 		 Ded,		//死んでる
 
@@ -39,9 +40,8 @@ public:
 	 //ボスの一部を降らせて、空中で止めてバラマキ弾を打つ
 	 enum enBossHurase
 	 {
-		 taiki,		//待機
+		 mid,		//中央に行く
 		 hurase,	//降らせます
-		 tome,		//空中で止めます
 		 utima,		//ばらまき撃ちます
 		 modorima	//戻ります
 
@@ -183,6 +183,10 @@ public:
 	float m_bsy[BS_MAX];
 
 	bool		m_bshotFlag[BS_MAX];
+
+
+	float  m_SyutuTimer = 0.f;
+	float  syutugentime = 20.0f;
 
 	int D;
 

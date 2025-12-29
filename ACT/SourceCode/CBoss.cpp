@@ -11,8 +11,9 @@
 CBoss::CBoss()
     :x(300)
     ,y(100)
-    ,m_BossHurase  (enBossHurase::taiki)
+    ,m_BossHurase  (enBossHurase::mid)
     ,m_RightLeft(1)
+    , m_SyutuTimer(0)
 {
 }
 CBoss::CBoss(GameWindow* pGameWnd)
@@ -262,31 +263,27 @@ void CBoss::Draw(CCamera*  pCamera)
         //ボスの降らせ攻撃の状態による処理
         switch (m_BossHurase)
         {
-        case enBossHurase::taiki:   //待機
+        case enBossHurase::mid:   //待機
 
-           
-
-
-
+            XDraw( pCamera);
+            RDraw(pCamera);
             break;
 
             //ｙ座標が下に移動する処理
         case enBossHurase::hurase:  //降らせる
 
-            m_Boss_BuiPosition->y += 2;
+            XDraw(pCamera);
+            RDraw(pCamera);
 
             break;
 
-            //空中で止める
-        case enBossHurase::tome:        //空中で止める
-            if (m_Boss_BuiPosition->y >= 500)
-            {
-                m_Boss_BuiPosition->y == 500;
-            }
-            break;
+         
 
             //ばらまき弾打つ
         case enBossHurase::utima:       //弾を打つ  
+
+            XDraw(pCamera);
+            RDraw(pCamera);
 
             //ばらまき弾の描画
             for (int i = 0; i < BaraShots.size(); i++) {
@@ -317,6 +314,9 @@ void CBoss::Draw(CCamera*  pCamera)
             //元に戻ってくる
         case enBossHurase::modorima:
 
+            XDraw(pCamera);
+            RDraw(pCamera);
+
             //ボスの一部が空中で止めた座標より下だった場合
             //
             while (m_Boss_BuiPosition->y >= 500)
@@ -336,6 +336,10 @@ void CBoss::ZDraw(CCamera* pCamera)
 {
     //ボス本体の描画
 
+    if (m_BossState != enBossState::Leving) {
+        return;
+    }
+
     m_FrameSplit.w = 356;
     m_FrameSplit.h = 356;
     m_FrameSplit.x = 0;
@@ -354,6 +358,9 @@ void CBoss::ZDraw(CCamera* pCamera)
 
 void CBoss::XDraw(CCamera* pCamera)
 {
+    if (m_BossState != enBossState::Leving) {
+        return;
+    }
 
     //ボスの一部を描画する
     m_FrameSplit.w = 113;
@@ -379,6 +386,9 @@ void CBoss::XDraw(CCamera* pCamera)
 
 void CBoss::RDraw(CCamera* pCamera)
 {
+    if (m_BossState != enBossState::Leving) {
+        return;
+    }
 
     //ボスの一部を描画する
     m_FrameSplit.w = 113;
@@ -419,7 +429,17 @@ void CBoss::Update()
     //谷口君に教えてもらった
     int time=0;
     time++;
+    //体力が３０％以上のときは左右に動くことを続ける
+    if (B_HP >= 1000 * 0.3)
+    {
+    if (m_BossState == enBossState::Wait) {
+        m_SyutuTimer += (1.0f / 60.0f);
 
+        if (m_SyutuTimer >= syutugentime) {
+            m_BossState = enBossState::Leving; // 20秒経ったら登場
+        }
+        return; 
+    }
     if (m_BossState == enBossState::Leving)
     { 
 
@@ -430,9 +450,7 @@ void CBoss::Update()
     //ボスがボススピードで左右に動き
     //画面端に行ったら反対方向にボススピードで動く
 
-    //体力が３０％以上のときは左右に動くことを続ける
-    if(B_HP >= 1000 * 0.3)
-    {
+    
         //メンバー変数を使うことで値の保持が可能
         if (m_Boss.x >= 270)
         {
@@ -467,6 +485,7 @@ void CBoss::Update()
 
             if (bosstime < 300)
             {
+
             }
 
             if (bosstime < 600)
@@ -476,7 +495,7 @@ void CBoss::Update()
             CBoss::WayUpdate();
             CBoss::SlowUpdate();
 
- 
+            
 
         //CBoss::Way(4, 15, 1);
 
@@ -496,43 +515,53 @@ void CBoss::Update()
         //ボスの降らせ攻撃の状態による処理
         switch (m_BossHurase)
         {
+        case enBossHurase::mid:
+
+            if (m_Boss.x < 240) {
+                m_Boss.x += 1.0f;
+            }
+
+            else {
+                if (m_Boss.x > 240)
+                    m_Boss.x -= 1.0f;
+            }
+
+            // 中央にきたら
+            if (m_Boss.x  <= 2.0f) {
+                m_Boss.x = 240;
+                m_BossHurase = enBossHurase::hurase;
+            }
+            break;
 
             //時間で処理をする　
             //1秒ごとに次の状態へ
         case enBossHurase::hurase:
-
-            if (time / 60 == 0) {
-                m_BossHurase = enBossHurase::tome;
-            }
-
-            break;
-
-            //空中で止める
-        case enBossHurase::tome:
-            if (time / 60 == 0) {
-
+            m_Boss_BuiPosition->y += 2.0f;
+            if (m_Boss_BuiPosition->y >= 400.0f) {
                 m_BossHurase = enBossHurase::utima;
             }
-
+          
             break;
 
+           
+        
             //ばらまき弾打つ
         case enBossHurase::utima:
-            if (time / 60 == 0) {
+           
                 CBoss::BaraUpdate();
 
                 m_BossHurase = enBossHurase::modorima;
-            }
+            
 
             break;
 
             //元に戻ってくる
         case enBossHurase::modorima:
-            if (time / 60 == 0) {
+           
 
-                m_BossHurase = enBossHurase::hurase;
+                m_BossHurase = enBossHurase::utima;
 
-            }
+            
             break;
         }
     }
