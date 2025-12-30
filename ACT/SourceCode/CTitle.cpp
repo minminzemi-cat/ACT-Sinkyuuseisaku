@@ -11,19 +11,10 @@ CTitle::~CTitle()
 }
 
 
-//‰æ‘œ‚ğ“Ç‚İ‚Ü‚¹‚é‚½‚ß‚ÌŠÖ”
-void CTitle::Init(HDC hScreenDC, HDC hMemDC, HDC hWorkDC)
-{
-   
-   m_pSentakuImg = new CImage(hScreenDC,  hMemDC,  hWorkDC);
-   
-   m_pSentakuImg->LoadBmp("Data\\BMP\\sentaku.bmp");
 
-
-}
 
 //•`‰æŠÖ”
-void CTitle::Draw(HDC m_hMemDC)
+void CTitle::Draw(CCamera* pCamera)
 {
 
 

@@ -1,7 +1,7 @@
 #pragma once
 #include"CImage.h"
 #include"Global.h"
-
+#include"CCamera.h"
 
 class CTitle
 {
@@ -16,9 +16,9 @@ public:
 public:
 
 	//画像を読み込ませるための関数
-	void Init(HDC hScreenDC, HDC hMemDC, HDC hWorkDC);
+	void SetImageBoss(CImage* pImg) { m_pSentakuImg = pImg; }
 	//このクラスで描画の処理入れたいから引数にメモリDCが必要
-	void Draw(HDC m_hMemDC);				
+	void Draw(CCamera* pCamera);
 	void Update();
 
 public:
