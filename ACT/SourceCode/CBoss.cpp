@@ -433,25 +433,27 @@ void CBoss::Update()
     if (B_HP >= 1000 * 0.3)
     {
     if (m_BossState == enBossState::Wait) {
-        m_SyutuTimer += (1.0f / 60.0f);
+        m_SyutuTimer += (1.0f / 60.0f);//これは一秒の計算
 
         if (m_SyutuTimer >= syutugentime) {
             m_BossState = enBossState::Leving; // 20秒経ったら登場
         }
         return; 
     }
+
+    //ボスが生きているとき
     if (m_BossState == enBossState::Leving)
-    { 
+    {
 
-    //左右に動くようにする
+        //左右に動くようにする
 
-    //何秒ごとに
+        //何秒ごとに
 
-    //ボスがボススピードで左右に動き
-    //画面端に行ったら反対方向にボススピードで動く
+        //ボスがボススピードで左右に動き
+        //画面端に行ったら反対方向にボススピードで動く
 
-    
-        //メンバー変数を使うことで値の保持が可能
+
+            //メンバー変数を使うことで値の保持が可能
         if (m_Boss.x >= 270)
         {
             m_RightLeft = -1.f;
@@ -475,31 +477,31 @@ void CBoss::Update()
 
         bosstime++;
 
-        
 
-       //ボスの体力が30％以上のとき、一分間このような処理を繰り返す
-            if (bosstime > 600)
-            {
-                bosstime = 0;
-            }
 
-            if (bosstime < 300)
-            {
+        //ボスの体力が30％以上のとき、一分間このような処理を繰り返す
+        if (bosstime > 6000 / 60)
+        {
+            bosstime = 0;
+        }
 
-            }
+        if (bosstime < 3000 / 60)
+        {
 
-            if (bosstime < 600)
-            {
-            }
+        }
 
-            CBoss::WayUpdate();
-            CBoss::SlowUpdate();
+        if (bosstime < 6000 / 60)
+        {
+        }
 
-            
+        CBoss::WayUpdate();
+        CBoss::SlowUpdate();
+
+
 
         //CBoss::Way(4, 15, 1);
 
-    }
+
 
     ///////////////////////////////////////////////////////////////
     // //////////////////////////////////////////////////////
@@ -508,61 +510,64 @@ void CBoss::Update()
     //
     //
     ////////////////////////////////////////////////////////////
-    
-    if (B_HP <= 1000 * 0.3)
 
-    {
-        //ボスの降らせ攻撃の状態による処理
-        switch (m_BossHurase)
+        if (B_HP <= 1000 * 0.3)
+
         {
-        case enBossHurase::mid:
+            //ボスの降らせ攻撃の状態による処理
+            switch (m_BossHurase)
+            {
+                //ボス本体を中央に移動させる
+            case enBossHurase::mid:
 
-            if (m_Boss.x < 240) {
-                m_Boss.x += 1.0f;
-            }
+                if (m_Boss.x < 240) {
+                    m_Boss.x += 1.0f;
+                }
 
-            else {
-                if (m_Boss.x > 240)
-                    m_Boss.x -= 1.0f;
-            }
+                else {
+                    if (m_Boss.x > 240)
+                        m_Boss.x -= 1.0f;
+                }
 
-            // 中央にきたら
-            if (m_Boss.x  <= 2.0f) {
-                m_Boss.x = 240;
-                m_BossHurase = enBossHurase::hurase;
-            }
-            break;
+                // 中央にきたら
+                if (m_Boss.x <= 2.0f) {
+                    m_Boss.x = 240;
+                    m_BossHurase = enBossHurase::hurase;
+                }
+                break;
 
-            //時間で処理をする　
-            //1秒ごとに次の状態へ
-        case enBossHurase::hurase:
-            m_Boss_BuiPosition->y += 2.0f;
-            if (m_Boss_BuiPosition->y >= 400.0f) {
-                m_BossHurase = enBossHurase::utima;
-            }
-          
-            break;
+                //時間で処理をする　
+                //1秒ごとに次の状態へ
+            case enBossHurase::hurase:
+                m_Boss_BuiPosition->y += 2.0f;
+                if (m_Boss_BuiPosition->y >= 400.0f) {
+                    m_BossHurase = enBossHurase::utima;
+                }
 
-           
-        
-            //ばらまき弾打つ
-        case enBossHurase::utima:
-           
+                break;
+
+
+
+                //ばらまき弾打つ
+            case enBossHurase::utima:
+
                 CBoss::BaraUpdate();
 
                 m_BossHurase = enBossHurase::modorima;
-            
 
-            break;
 
-            //元に戻ってくる
-        case enBossHurase::modorima:
-           
+                break;
+
+                //元に戻ってくる
+            case enBossHurase::modorima:
+
 
                 m_BossHurase = enBossHurase::utima;
 
-            
-            break;
+
+                break;
+            }
+
         }
     }
     }

@@ -70,6 +70,12 @@
     <Filter Include="SourceCode\CBOSS">
       <UniqueIdentifier>{07855c48-6995-4470-8b19-75fcf5ed670f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SourceCode\CScore">
+      <UniqueIdentifier>{3c4b6dcc-748d-4e4d-a792-8d9888029303}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceCode\CTitle">
+      <UniqueIdentifier>{afb4b950-6483-4667-b8f2-c7b459cd4a47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\CGame.cpp">
@@ -140,6 +146,12 @@
     </ClCompile>
     <ClCompile Include="SourceCode\CBoss.cpp">
       <Filter>SourceCode\CBOSS</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\CScore.cpp">
+      <Filter>SourceCode\CScore</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\CTitle.cpp">
+      <Filter>SourceCode\CTitle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +229,12 @@
     </ClInclude>
     <ClInclude Include="SourceCode\CBoss.h">
       <Filter>SourceCode\CBOSS</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\CScore.h">
+      <Filter>SourceCode\CScore</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\CTitle.h">
+      <Filter>SourceCode\CTitle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

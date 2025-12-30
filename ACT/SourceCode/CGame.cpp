@@ -417,6 +417,10 @@ void CGame::Update()
 		case enScene::GameMain:
 		{
 
+			if (GetAsyncKeyState('A') & 0x0001) {
+				m_pBoss->B_HP = 100;
+
+			}
 
 
 			//F1ÉLÅ[.

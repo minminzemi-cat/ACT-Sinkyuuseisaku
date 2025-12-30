@@ -136,9 +136,11 @@
     <ClCompile Include="SourceCode\CImage.cpp" />
     <ClCompile Include="SourceCode\CPlayer.cpp" />
     <ClCompile Include="SourceCode\CPlayershot.cpp" />
+    <ClCompile Include="SourceCode\CScore.cpp" />
     <ClCompile Include="SourceCode\CSound.cpp" />
     <ClCompile Include="SourceCode\CSoundManager.cpp" />
     <ClCompile Include="SourceCode\CStage.cpp" />
+    <ClCompile Include="SourceCode\CTitle.cpp" />
     <ClCompile Include="SourceCode\CWinInit.cpp" />
     <ClCompile Include="SourceCode\Ending.cpp" />
     <ClCompile Include="SourceCode\Excalibur.cpp" />
@@ -161,9 +163,11 @@
     <ClInclude Include="SourceCode\CImage.h" />
     <ClInclude Include="SourceCode\CPlayer.h" />
     <ClInclude Include="SourceCode\CPlayershot.h" />
+    <ClInclude Include="SourceCode\CScore.h" />
     <ClInclude Include="SourceCode\CSound.h" />
     <ClInclude Include="SourceCode\CSoundManager.h" />
     <ClInclude Include="SourceCode\CStage.h" />
+    <ClInclude Include="SourceCode\CTitle.h" />
     <ClInclude Include="SourceCode\CWinInit.h" />
     <ClInclude Include="SourceCode\Ending.h" />
     <ClInclude Include="SourceCode\Excalibur.h" />
