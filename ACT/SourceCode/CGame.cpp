@@ -147,6 +147,10 @@ bool CGame::Create()
 	{
 		//背景画像のインスタンス生成.
 		m_pBackImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+
+		//タイトルのインスタンス
+		m_pTitleImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+
 		//ゲームオーバー
 		m_pOverImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 		//エンディング
@@ -232,6 +236,11 @@ bool CGame::Create()
 
 		//背景の読み込み.
 		if (m_pBackImg->LoadBmp("Data\\Image\\back.bmp") == false) return false;
+
+		//タイトル画像の読み込み
+		if (m_pTitleImg->LoadBmp("Data\\Image\\sora2.bmp") == false) return false;
+
+
 		//ゲームオーバー.
 		if (m_pOverImg->LoadBmp("Data\\Image\\GameOver.bmp") == false) return false;
 		//ゲームクリア.
@@ -303,6 +312,10 @@ bool CGame::Create()
 	m_pStage->SetImageScore(m_pscoreImg);
 	////マップデータ読み込み.
 	//if( m_pStage->LoadData( "Data\\MapData\\Map01.csv" ) == false ) return false;
+
+	//ゲームオーバーのインスタンス生成.
+	m_GameOver = new CGameOver();
+	m_GameOver->SetImageGameOver(m_pOverImg);
 
 	//ゲームオーバーのインスタンス生成.
 	m_GameOver = new CGameOver();

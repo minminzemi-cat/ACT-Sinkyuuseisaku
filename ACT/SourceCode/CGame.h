@@ -13,6 +13,9 @@
 #include "Excalibur.h"			//エネミークラス.
 #include "CStage.h"			//ステージクラス.
 #include "CCamera.h"		//カメラクラス.
+
+#include"CTitle.h"
+
 #include "GameOver.h"		//カメラクラス.
 #include "Ending.h"		//カメラクラス.
 #include "Result.h"		//カメラクラス.
@@ -89,6 +92,9 @@ private:
 	HBITMAP		m_hWorkBmp2;		//作業用BITMAP.
 	HFONT		m_hFont;		//フォントハンドル.
 	CImage*		m_pBackImg;		//背景画像.
+	
+	CImage* m_pTitleImg;		//タイトル
+
 	CImage*     m_pOverImg;
 	CImage*     m_pEndingImg;
 	CImage*     m_pResultImg;
@@ -141,6 +147,7 @@ private:
 	CStage*		m_pStage;
 	//----- カメラ ----.
 	CCamera* m_pCamera;		//カメラ.
+	CTitle* m_pTitle;
 	CGameOver* m_GameOver;
 	CEnding* m_Ending;
 	CResult* m_result;
