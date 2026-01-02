@@ -93,7 +93,11 @@ private:
 	HFONT		m_hFont;		//フォントハンドル.
 	CImage*		m_pBackImg;		//背景画像.
 	
-	CImage* m_pTitleImg;		//タイトル
+	CImage* m_pSentakuImg;		//タイトル
+
+	CImage* m_pTitleImg;
+
+	CImage* m_pKennImg;
 
 	CImage*     m_pOverImg;
 	CImage*     m_pEndingImg;
@@ -147,7 +151,17 @@ private:
 	CStage*		m_pStage;
 	//----- カメラ ----.
 	CCamera* m_pCamera;		//カメラ.
+
+
+
 	CTitle* m_pTitle;
+
+	CTitle* m_TitleSword;
+
+
+
+
+	
 	CGameOver* m_GameOver;
 	CEnding* m_Ending;
 	CResult* m_result;

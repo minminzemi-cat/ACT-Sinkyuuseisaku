@@ -237,8 +237,20 @@ bool CGame::Create()
 		//背景の読み込み.
 		if (m_pBackImg->LoadBmp("Data\\Image\\back.bmp") == false) return false;
 
+
+
+
+
 		//タイトル画像の読み込み
 		if (m_pTitleImg->LoadBmp("Data\\Image\\sora2.bmp") == false) return false;
+
+		//タイトル選択
+		if (m_pSentakuImg->LoadBmp("Data\\Image\\sentaku.bmp") == false) return false;
+
+		
+		if (m_pKennImg->LoadBmp("Data\\Image\\Ken1.bmp") == false) return false;
+
+
 
 
 		//ゲームオーバー.
@@ -313,6 +325,20 @@ bool CGame::Create()
 	////マップデータ読み込み.
 	//if( m_pStage->LoadData( "Data\\MapData\\Map01.csv" ) == false ) return false;
 
+
+
+
+
+
+	//タイトルのインスタンス生成
+	m_pTitle=new CTitle();
+	m_pTitle->SetImageTitle(m_pSentakuImg);
+	m_pTitle->SetImageBack(m_pTitleImg);
+	m_pTitle->SetImageSord(m_pKennImg);
+
+
+
+
 	//ゲームオーバーのインスタンス生成.
 	m_GameOver = new CGameOver();
 	m_GameOver->SetImageGameOver(m_pOverImg);
@@ -370,6 +396,7 @@ void CGame::Destroy()
 	SAFE_DELETE(m_pSPGeagImg);
 	SAFE_DELETE( m_pEnemyImg );
 	SAFE_DELETE( m_pCharaImg );
+	SAFE_DELETE(m_pSentakuImg);
 	SAFE_DELETE( m_pBackImg  );
 
 	SAFE_DELETE(m_pbossImg);
@@ -673,6 +700,14 @@ void CGame::Update()
 //描画関数(画像の表示処理を行う).
 void CGame::Draw()
 {
+
+	if (m_scene == enScene::Title)
+	{
+		m_pTitle->XDraw(m_pCamera);
+		m_pTitle->Draw(m_pCamera);
+		m_pTitle->RDraw(m_pCamera);
+	}
+
 	if (m_scene==enScene::GameMain) {
 		//ステージ描画.
 		m_pStage->Draw(m_pCamera);
