@@ -91,6 +91,10 @@ public:
 	//爆発の画像読込
 	void SetImageBom(CImage* pImg) { m_pbossBomImg = pImg; }
 
+
+	//ボスゲージ
+	void SetImgGezi(CImage* pImg) { m_pbossGageImg = pImg; }
+
 public:
 
 	//画像の定義
@@ -104,11 +108,16 @@ public:
 	//時機を遅くする玉
 	
 	CImage* m_pbossSlowshotImg;
+	
 	//ボスの一部から出てくるバラマキ弾の画像
 	CImage* m_pbossbuiImg;
 
 	//ボスが倒された時の爆発
 	CImage* m_pbossBomImg;
+
+
+	//ボスの体力ゲージ
+	CImage* m_pbossGageImg;
 
 	//初期化（リセット）
 	void InitializeGame();

@@ -71,27 +71,27 @@ void CTitle::XDraw(CCamera* pCamera)
 //動作関数
 void CTitle::Update()
 {
-	//ゲームメインへ
-	if (m_TitleSword == 290)
-	{
-		if (GetAsyncKeyState(VK_RETURN) & 0x0001 )
-		{
-			//m_Alpha = 0;		//次にタイトルに入ってきても大丈夫なように最小値を設定						
+	////ゲームメインへ
+	//if (m_TitleSword == 290)
+	//{
+	//	if (GetAsyncKeyState(VK_RETURN) & 0x0001 )
+	//	{
+	//		//m_Alpha = 0;		//次にタイトルに入ってきても大丈夫なように最小値を設定						
 
-			m_Game->m_Scene = enScene::GameMain;	//ゲームメインへ
+	//		m_Game->m_Scene = enScene::GameMain;	//ゲームメインへ
 
-			
-		}
-	}
-	//ゲーム終了
-	if (m_TitleSword == 395)
-	{
-		if (GetAsyncKeyState(VK_RETURN) & 0x0001 )
-		{
-			PostMessage(m_pGameWnd->hWnd, WM_CLOSE, 0, 0);
+	//		
+	//	}
+	//}
+	////ゲーム終了
+	//if (m_TitleSword == 395)
+	//{
+	//	if (GetAsyncKeyState(VK_RETURN) & 0x0001 )
+	//	{
+	//		PostMessage(m_pGameWnd->hWnd, WM_CLOSE, 0, 0);
 
-		}
-	}
+	//	}
+	//}
 
 	if (GetAsyncKeyState(VK_UP) & 0x0001)//アップキー
 	{

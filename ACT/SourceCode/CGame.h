@@ -127,6 +127,13 @@ private:
 	CImage* m_pbossSlowshotImg;
 	CImage* m_pbossbuiImg;
 
+	//ボスの爆発音
+	CImage* m_pbossBomImg;
+
+	//ボスの体力ゲージ
+	CImage* m_pbossGageImg;
+
+
 	CImage*		m_pPlayerImg;	//プレイヤー画像.
 	CImage*		m_pStageImg;	//ステージ画像.
 	CImage*     m_pscoreImg;	//スコア画像.

@@ -3,7 +3,6 @@
 #include"Global.h"
 #include"CCamera.h"
 #include "MyMath.h"	//ƒJƒƒ‰ƒNƒ‰ƒX.
-#include"CGame.h"
 
 class CTitle
 {
@@ -38,8 +37,6 @@ public:
 
 	void Update();
 
-
-	CGame* m_Game;
 
 
 public:

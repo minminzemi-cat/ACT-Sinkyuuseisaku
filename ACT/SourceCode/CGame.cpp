@@ -223,6 +223,14 @@ bool CGame::Create()
 
 
 
+
+
+		//ボスゲージ
+		if (m_pbossGageImg->LoadBmp("Data\\Image\\BossBui.bmp") == false)	return false;
+
+
+
+
 		//敵画像の読み込み2.
 		if (m_pEnemy2Img->LoadBmp("Data\\Image\\cha.bmp") == false)    return false;
 	   //エネミー爆発画像の読み込み
