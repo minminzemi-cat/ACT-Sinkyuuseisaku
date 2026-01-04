@@ -47,7 +47,7 @@ void CTitle::RDraw(CCamera* pCamera)
 
 	m_pKennImg->TransBlt(
 		50,					//表示位置x座標
-		400,					//表示位置y座標.
+		m_TitleSword,					//表示位置y座標.
 		200,				//画像幅
 		70,					//画像高さ.
 		0,					//元画像x座標.・・・座標0,0から画像幅、高さ分を取り出しますよ

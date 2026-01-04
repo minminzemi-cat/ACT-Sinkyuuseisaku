@@ -224,7 +224,7 @@ bool CGame::Create()
 
 
 
-
+		//-----------------------------------------------------------------------------
 		//ボスゲージ
 		if (m_pbossGageImg->LoadBmp("Data\\Image\\BossBui.bmp") == false)	return false;
 

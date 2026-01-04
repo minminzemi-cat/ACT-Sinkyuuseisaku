@@ -127,7 +127,7 @@ private:
 	CImage* m_pbossSlowshotImg;
 	CImage* m_pbossbuiImg;
 
-	//ボスの爆発音
+	//ボスの爆発
 	CImage* m_pbossBomImg;
 
 	//ボスの体力ゲージ
