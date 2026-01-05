@@ -29,6 +29,7 @@ public:
 	 {
 		 Wait,      //待機
 		 Leving,	//生きている
+		 Explsion,	//爆発
 		 Ded,		//死んでる
 
 
@@ -165,6 +166,10 @@ public:
 
 	//ボスの一部の描画
 	void RDraw(CCamera* pCamera);
+
+
+	//ばくはつあにめーしょん
+	void  ExplosionAnimation();
 	
 
 	CHARA m_Boss;

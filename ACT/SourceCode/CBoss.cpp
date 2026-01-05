@@ -246,7 +246,7 @@ void CBoss::Draw(CCamera*  pCamera)
         }
 
     
-    }
+    
 
     //*****************************************************************:
     // **********************************************************************
@@ -265,7 +265,7 @@ void CBoss::Draw(CCamera*  pCamera)
         {
         case enBossHurase::mid:   //待機
 
-            XDraw( pCamera);
+            XDraw(pCamera);
             RDraw(pCamera);
             break;
 
@@ -277,7 +277,7 @@ void CBoss::Draw(CCamera*  pCamera)
 
             break;
 
-         
+
 
             //ばらまき弾打つ
         case enBossHurase::utima:       //弾を打つ  
@@ -327,6 +327,18 @@ void CBoss::Draw(CCamera*  pCamera)
 
             break;
         }
+      }
+    }
+    
+    if (m_BossState == enBossState::Explsion)
+    {
+        //爆発アニメーション
+        ExplosionAnimation();
+    }
+
+    if (m_BossState == enBossState::Ded)
+    {
+        //何もしない
     }
 }
 
@@ -480,7 +492,7 @@ void CBoss::Update()
 
 
         //ボスの体力が30％以上のとき、一分間このような処理を繰り返す
-        if (bosstime > 6000 / 60)
+        if (bosstime > 6000 )
         {
             bosstime = 0;
         }
@@ -572,4 +584,35 @@ void CBoss::Update()
     }
     }
 }
+//爆発アニメーション関数
+void  CBoss::ExplosionAnimation()
+{
 
+    //画像のサイズを間違えると描画されない
+    //ディエゴのおかげ
+    m_FrameSplit.w = 192;
+    m_FrameSplit.h = 192;
+    m_FrameSplit.y = 0;
+    //僕の画像はこの大きさでないとだめ
+
+    m_pbossBomImg->TransBlt(
+        m_Boss.x,
+        m_Boss.y,
+        m_FrameSplit.w,
+        m_FrameSplit.h,
+        m_FrameSplit.x,
+        m_FrameSplit.y);
+
+
+
+        //爆発の描画
+    if (m_FrameCounter >= 11) {
+
+        //　　　0       +=     192
+        m_FrameSplit.x += m_FrameSplit.w;
+
+        m_FrameCounter = 1;
+
+    }
+
+}

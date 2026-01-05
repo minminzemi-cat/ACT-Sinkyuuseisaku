@@ -122,8 +122,9 @@ bool CGame::Create()
 		m_pEnemy2Img = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
 
+		//--------------------------------------
 		//ボス
-
+		//--------------------------------------
 		m_pbossImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
 		m_pbossHandImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
@@ -133,6 +134,8 @@ bool CGame::Create()
 		m_pbossSlowshotImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
 		m_pbossbuiImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+
+		m_pbossBomImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
 		//プライヤー爆発
 		m_pEExprotionImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
@@ -150,6 +153,11 @@ bool CGame::Create()
 
 		//タイトルのインスタンス
 		m_pTitleImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+
+		//タイトル選択肢
+		m_pSentakuImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+
+		m_pKennImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
 		//ゲームオーバー
 		m_pOverImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
@@ -217,16 +225,17 @@ bool CGame::Create()
 		//ボスの玉 遅くする
 		if (m_pbossSlowshotImg->LoadBmp("Data\\Image\\slow.bmp") == false)	return false;
 
-		//ボスの玉　一部ぁら
+		//ボスの玉　一部から出てくるやつ
 		if (m_pbossbuiImg->LoadBmp("Data\\Image\\BossBui.bmp") == false)	return false;
 
-
+		//ボスの爆発
+		if (m_pbossBomImg->LoadBmp("Data\\Image\\Explosion1.bmp") == false)	return false;
 
 
 
 		//-----------------------------------------------------------------------------
 		//ボスゲージ
-		if (m_pbossGageImg->LoadBmp("Data\\Image\\BossBui.bmp") == false)	return false;
+		/*if (m_pbossGageImg->LoadBmp("Data\\Image\\BossBui.bmp") == false)	return false;*/
 
 
 
@@ -247,7 +256,10 @@ bool CGame::Create()
 
 
 
-
+		//-------------------------------------
+		//タイトル画面
+		//-------------------
+		//
 
 		//タイトル画像の読み込み
 		if (m_pTitleImg->LoadBmp("Data\\Image\\sora2.bmp") == false) return false;
@@ -323,6 +335,7 @@ bool CGame::Create()
 	m_pBoss->SetImageShot(m_pbossWayshotImg);
 	m_pBoss->SetImageSlow(m_pbossSlowshotImg);
 	m_pBoss->SetImagebui(m_pbossbuiImg);
+	m_pBoss->SetImageBom(m_pbossBomImg);
 
 	//ステージのインスタンス生成.
 	m_pStage = new CStage();
@@ -454,6 +467,7 @@ void CGame::Update()
 	{
 		case enScene::Title:
 		{
+			m_pTitle->Update();
 			if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 			{
 				m_scene = enScene::GameMain;
