@@ -257,33 +257,30 @@ void CBoss::Draw(CCamera*  pCamera)
     //
     //*********************************************************************
     //***************************************************************************
-    if (B_HP <= 1000 * 0.3)
-    {
-
-        //ボスの降らせ攻撃の状態による処理
-        switch (m_BossHurase)
-        {
-        case enBossHurase::mid:   //待機
-
-            XDraw(pCamera);
-            RDraw(pCamera);
-            break;
-
-            //ｙ座標が下に移動する処理
-        case enBossHurase::hurase:  //降らせる
-
-            XDraw(pCamera);
-            RDraw(pCamera);
-
-            break;
+    //if (B_HP <= 1000 * 0.3)
+    //{
 
 
+    //    //ボスの降らせ攻撃の状態による処理
+    //    switch (m_BossHurase)
+    //    {
+    //    case enBossHurase::mid:   //待機
 
-            //ばらまき弾打つ
-        case enBossHurase::utima:       //弾を打つ  
+    //       
+    //        break;
 
-            XDraw(pCamera);
-            RDraw(pCamera);
+    //        //ｙ座標が下に移動する処理
+    //    case enBossHurase::hurase:  //降らせる
+
+    //      
+
+    //        break;
+
+
+
+    //        //ばらまき弾打つ
+    //    case enBossHurase::utima:       //弾を打つ  
+
 
             //ばらまき弾の描画
             for (int i = 0; i < BaraShots.size(); i++) {
@@ -309,25 +306,25 @@ void CBoss::Draw(CCamera*  pCamera)
 
             }
 
-            break;
+    //        break;
 
-            //元に戻ってくる
-        case enBossHurase::modorima:
+    //        //元に戻ってくる
+    //    case enBossHurase::modorima:
 
-            XDraw(pCamera);
-            RDraw(pCamera);
+    //        XDraw(pCamera);
+    //        RDraw(pCamera);
 
-            //ボスの一部が空中で止めた座標より下だった場合
-            //
-            while (m_Boss_BuiPosition->y >= 500)
-            {
-                m_Boss_BuiPosition->y -= 2;
-            }
+    //        //ボスの一部が空中で止めた座標より下だった場合
+    //        //
+    //        while (m_Boss_BuiPosition->y >= 500)
+    //        {
+    //            m_Boss_BuiPosition->y -= 2;
+    //        }
 
 
-            break;
-        }
-      }
+    //        break;
+    //    }
+    //  }
     }
     
     if (m_BossState == enBossState::Explsion)
@@ -448,7 +445,7 @@ void CBoss::Update()
         m_SyutuTimer += (1.0f / 60.0f);//これは一秒の計算
 
         if (m_SyutuTimer >= syutugentime) {
-            m_BossState = enBossState::Leving; // 20秒経ったら登場
+            m_BossState = enBossState::Leving; // 10秒経ったら登場
         }
         return; 
     }

@@ -93,7 +93,7 @@ private:
 	HFONT		m_hFont;		//フォントハンドル.
 	CImage*		m_pBackImg;		//背景画像.
 	
-	CImage* m_pSentakuImg;		//タイトル
+	//タイトル
 
 	CImage* m_pTitleImg;
 

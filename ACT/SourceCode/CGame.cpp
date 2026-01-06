@@ -32,6 +32,7 @@ CGame::CGame( GameWindow* pGameWnd )
 	, m_pEnemy3		(nullptr)
 	, m_pStage		( nullptr )
 	, m_pCamera		( nullptr )
+	,m_scene(enScene::Title)
 {
 }
 
@@ -43,14 +44,14 @@ CGame::~CGame()
 //初期化(リセット)関数.
 void CGame::InitializeGame()
 {
-
+	m_scene == enScene::Title;
 
 }
 
 //構築関数.
 bool CGame::Create()
 {
-	m_scene = enScene::GameMain;
+	m_scene = enScene::Title;
 	//乱数の初期化.
 	srand( (unsigned int)time( nullptr ) );
 
@@ -153,10 +154,7 @@ bool CGame::Create()
 
 		//タイトルのインスタンス
 		m_pTitleImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
-
-		//タイトル選択肢
-		m_pSentakuImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
-
+		//タイトルの剣
 		m_pKennImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
 		//ゲームオーバー
@@ -264,8 +262,6 @@ bool CGame::Create()
 		//タイトル画像の読み込み
 		if (m_pTitleImg->LoadBmp("Data\\Image\\sora2.bmp") == false) return false;
 
-		//タイトル選択
-		if (m_pSentakuImg->LoadBmp("Data\\Image\\sentaku.bmp") == false) return false;
 
 		
 		if (m_pKennImg->LoadBmp("Data\\Image\\Ken1.bmp") == false) return false;
@@ -353,7 +349,6 @@ bool CGame::Create()
 
 	//タイトルのインスタンス生成
 	m_pTitle=new CTitle();
-	m_pTitle->SetImageTitle(m_pSentakuImg);
 	m_pTitle->SetImageBack(m_pTitleImg);
 	m_pTitle->SetImageSord(m_pKennImg);
 
@@ -417,7 +412,8 @@ void CGame::Destroy()
 	SAFE_DELETE(m_pSPGeagImg);
 	SAFE_DELETE( m_pEnemyImg );
 	SAFE_DELETE( m_pCharaImg );
-	SAFE_DELETE(m_pSentakuImg);
+	SAFE_DELETE(m_pKennImg);
+	SAFE_DELETE(m_pTitleImg);
 	SAFE_DELETE( m_pBackImg  );
 
 	SAFE_DELETE(m_pbossImg);
@@ -444,35 +440,45 @@ void CGame::Destroy()
 //更新関数(キー入力や動作処理を行う).
 void CGame::Update()
 {
-	//BGM_Bonusをループ再生.
-	if (m_scene == enScene::GameMain&& m_Exc->GetIAI() == false) {
-		CSoundManager::PlayLoop(CSoundManager::enList::BGM_Bonus);
-	}
-	if (m_Exc->GetIAI() == true)
-	{
-		CSoundManager::Stop(CSoundManager::enList::BGM_Bonus);
-	}
-
-	if (m_scene == enScene::GameOver) {
-		CSoundManager::Stop(CSoundManager::enList::BGM_Bonus);
-		CSoundManager::PlayLoop(CSoundManager::enList::BGM_GameOver);
-	}
-
-	if (m_scene == enScene::Ending) {
-		CSoundManager::Stop(CSoundManager::enList::BGM_Bonus);
-		CSoundManager::PlayLoop(CSoundManager::enList::BGM_Ending);
-	}
+	
 
 	switch (m_scene)
 	{
 		case enScene::Title:
 		{
 			m_pTitle->Update();
-			if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+
+			//ゲームメインへ
+			if (m_pTitle->m_TitleSword == 300)
+			{
+				if (GetAsyncKeyState(VK_RETURN) & 0x0001)
+				{			
+
+					m_scene = enScene::GameMain;	//ゲームメインへ
+
+
+				}
+			}
+			//ゲーム終了
+			if (m_pTitle->m_TitleSword == 420)
+			{
+				if (GetAsyncKeyState(VK_RETURN) & 0x0001)
+				{
+					PostMessage(m_pGameWnd->hWnd, WM_CLOSE, 0, 0);
+
+				}
+			}
+
+			if (GetAsyncKeyState(VK_RETURN) & 0x0001)
 			{
 				m_scene = enScene::GameMain;
 			}
+			InitializeGame();
 		}
+		
+		
+		
+		break;
 
 
 		//ゲームメイン
@@ -694,6 +700,7 @@ void CGame::Update()
 			}
 	
 		}
+		break;
 
 		case enScene::GameOver:
 		{
@@ -702,6 +709,7 @@ void CGame::Update()
 				m_scene = enScene::Result;
 			}
 		}
+		break;
 
 		case enScene::Ending:
 		{
@@ -710,76 +718,85 @@ void CGame::Update()
 			}
 			m_Ending->Update();
 		}
+		break;
 
 		case enScene::Result:
 		{
 			m_result->Update();
 			
 		}
+		break;
 	}
+
 }
 
 //描画関数(画像の表示処理を行う).
 void CGame::Draw()
 {
-
-	if (m_scene == enScene::Title)
+	switch (m_scene)
 	{
-		m_pTitle->XDraw(m_pCamera);
-		m_pTitle->Draw(m_pCamera);
-		m_pTitle->RDraw(m_pCamera);
-	}
+	case enScene::Title:
+		{
+			m_pTitle->XDraw(m_pCamera);
+			m_pTitle->RDraw(m_pCamera);
+			break;
+		}
+		
+		case enScene::GameMain: {
+			//ステージ描画.
+			m_pStage->Draw(m_pCamera);
 
-	if (m_scene==enScene::GameMain) {
-		//ステージ描画.
-		m_pStage->Draw(m_pCamera);
+			m_pEnemy->Draw(m_pCamera);
 
-		m_pEnemy->Draw(m_pCamera);
+			m_pEnemy2->Draw(m_pCamera);
 
-		m_pEnemy2->Draw(m_pCamera);
+			//ショット画像
+			m_ppshot->DrawShot(m_pCamera);
+			//プレイヤー描画.
+			m_pPlayer->Draw(m_pCamera);
+			//bomショット画像
+			m_ppshot->DrawBomShot(m_pCamera);
 
-		//ショット画像
-		m_ppshot->DrawShot(m_pCamera);
-		//プレイヤー描画.
-		m_pPlayer->Draw(m_pCamera);
-		//bomショット画像
-		m_ppshot->DrawBomShot(m_pCamera);
+			m_ppshot->DrawBomset(m_pCamera);
 
-		m_ppshot->DrawBomset(m_pCamera);
-
-		m_Exc->DrawShotKen(m_pCamera);
+			m_Exc->DrawShotKen(m_pCamera);
 
 
 
-		//ボス本体の描画
-		m_pBoss->ZDraw(m_pCamera);
+			//ボス本体の描画
+			m_pBoss->ZDraw(m_pCamera);
 
-		//ボスの一部と攻撃を描画
-		m_pBoss->Draw(m_pCamera);
+			//ボスの一部と攻撃を描画
+			m_pBoss->Draw(m_pCamera);
 
-		m_pBoss->XDraw(m_pCamera);
+			m_pBoss->XDraw(m_pCamera);
 
-		m_pBoss->RDraw(m_pCamera);
+			m_pBoss->RDraw(m_pCamera);
 
-	
 
-		//必殺ショット画像
-		m_ppshot->DrawSpecialmove(m_pCamera);
 
-		//ゲージ画像
-		m_Exc->DrawGeag(m_pCamera);
-	}
+			//必殺ショット画像
+			m_ppshot->DrawSpecialmove(m_pCamera);
 
-	if (m_scene == enScene::Ending) {
-		m_Ending->Draw(m_pCamera);
-	}
+			//ゲージ画像
+			m_Exc->DrawGeag(m_pCamera);
+			break;
+		}
 
-	if (m_scene == enScene::GameOver) {
-		m_GameOver->Draw(m_pCamera);
-	}
+		case enScene::Ending: {
+			m_Ending->Draw(m_pCamera);
+			break;
+		}
 
-	if (m_scene == enScene::Result) {
-		m_result->Draw(m_pCamera);
+		case enScene::GameOver: {
+			m_GameOver->Draw(m_pCamera);
+			break;
+		}
+
+		case enScene::Result: {
+			m_result->Draw(m_pCamera);
+			break;
+		}
 	}
 	
 /*	SelectObject(m_hMemDC, m_pEnemyImg->GetBmp());

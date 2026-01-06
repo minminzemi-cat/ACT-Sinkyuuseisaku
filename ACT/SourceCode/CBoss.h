@@ -200,7 +200,7 @@ public:
 
 
 	float  m_SyutuTimer = 0.f;
-	float  syutugentime = 20.0f;
+	float  syutugentime = 10.0f;
 
 	int D;
 
