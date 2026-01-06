@@ -1,6 +1,7 @@
 #include "CScore.h"
 
 CScore::CScore()
+	:m_ScoreImg(nullptr)
 {
 }
 
@@ -54,7 +55,7 @@ void CScore::TitleDraw(CCamera* pCamera, int score)
 	}
 	if (keta == 0) {
 
-		m_pScoreImg->TransBlt(
+		m_ScoreImg->TransBlt(
 			200, // X座標
 			200,     // Y座標
 			65, 85, //画像幅、高さ.
@@ -63,7 +64,7 @@ void CScore::TitleDraw(CCamera* pCamera, int score)
 	else {
 		int t;
 		for (int i = 0; i < keta; i++) {
-			m_pScoreImg->TransBlt(
+			m_ScoreImg->TransBlt(
 				200 - 20 * i, // X座標
 				200,     // Y座標
 				65, 85, //画像幅、高さ.

@@ -16,6 +16,8 @@
 
 #include"CTitle.h"
 
+#include"CScore.h"
+
 #include "GameOver.h"		//カメラクラス.
 #include "Ending.h"		//カメラクラス.
 #include "Result.h"		//カメラクラス.
@@ -92,6 +94,9 @@ private:
 	HBITMAP		m_hWorkBmp2;		//作業用BITMAP.
 	HFONT		m_hFont;		//フォントハンドル.
 	CImage*		m_pBackImg;		//背景画像.
+
+	//スコア
+	CImage* m_ScoreImg;
 	
 	//タイトル
 
@@ -166,8 +171,9 @@ private:
 	CTitle* m_TitleSword;
 
 
+	CScore* m_Score;
 
-
+	int score;
 	
 	CGameOver* m_GameOver;
 	CEnding* m_Ending;

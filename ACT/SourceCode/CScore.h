@@ -24,7 +24,7 @@ public:
 public:
 	void Update();
 	//画像読み込み
-	void SetImageScore(CImage* pImg, int score) { m_pScoreImg = pImg; }
+	void SetImageScore(CImage* pImg, int score) { m_ScoreImg = pImg; }
 
 	void Draw(CCamera* pCamera, int score);
 
@@ -40,5 +40,5 @@ public:
 	//ハイスコア
 	int m_HightScore;
 
-	CImage* m_pScoreImg;
+	CImage* m_ScoreImg;
 };

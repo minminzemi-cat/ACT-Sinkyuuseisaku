@@ -173,6 +173,10 @@ bool CGame::Create()
 		m_pRankImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
 
+		//スコア
+		m_ScoreImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+
+
 	}
 
 
@@ -283,6 +287,10 @@ bool CGame::Create()
 		if (m_pscoreImg->LoadBmp("Data\\Image\\SCOAR.bmp") == false)  return false;
 		//ステージ画像の読み込み
 		if (m_pStageImg->LoadBmp("Data\\Image\\SwitchPlace_lite.bmp") == false)  return false;
+
+
+		//スコア画像の読み込み
+		if (m_ScoreImg->LoadBmp("Data\\Image\\SCOAR.bmp") == false)  return false;
 	}
 
 
@@ -375,6 +383,10 @@ bool CGame::Create()
 	m_result->SetEn(m_pEnemy);
 	m_result->SetEx(m_Exc);
 	//m_result->SetImagecgame(m_cgame);
+
+
+	m_Score = new CScore();
+	m_Score->SetImageScore(m_ScoreImg,score);
 
 
 	//カメラのインスタンス生成.
@@ -739,6 +751,8 @@ void CGame::Draw()
 		{
 			m_pTitle->XDraw(m_pCamera);
 			m_pTitle->RDraw(m_pCamera);
+
+			m_Score->TitleDraw(m_pCamera,score);
 			break;
 		}
 		
