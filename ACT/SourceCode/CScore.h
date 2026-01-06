@@ -24,7 +24,7 @@ public:
 public:
 	void Update();
 	//‰æ‘œ“Ç‚İ‚İ
-	void SetImageScore(CImage* pImg, int score) { m_ScoreImg = pImg; }
+	void SetImageScore(CImage* pImg) { m_ScoreImg = pImg; }
 
 	void Draw(CCamera* pCamera, int score);
 

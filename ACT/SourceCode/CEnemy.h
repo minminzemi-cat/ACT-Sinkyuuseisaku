@@ -2,6 +2,8 @@
 #include "CCharacter.h"	//キャラクタークラス.
 #include "CCamera.h"	//カメラクラス.
 #include "MyMath.h"	//カメラクラス.
+#include"CScore.h"
+
 #include <cmath>
 #include <vector>
 
@@ -68,6 +70,8 @@ public:
 	float playerY = 0.0f;
 
 	bool		m_eshotFlag[ES_MAX];
+
+	CScore* m_HightScore;
 
 
 private:

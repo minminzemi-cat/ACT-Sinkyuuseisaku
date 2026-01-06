@@ -386,7 +386,7 @@ bool CGame::Create()
 
 
 	m_Score = new CScore();
-	m_Score->SetImageScore(m_ScoreImg,score);
+	m_Score->SetImageScore(m_ScoreImg);
 
 
 	//カメラのインスタンス生成.

@@ -173,6 +173,8 @@ private:
 
 	CScore* m_Score;
 
+	CScore* m_HightScore;
+
 	int score;
 	
 	CGameOver* m_GameOver;
