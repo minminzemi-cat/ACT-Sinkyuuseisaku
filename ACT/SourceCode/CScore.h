@@ -25,10 +25,14 @@ public:
 	void Update();
 	//画像読み込み
 	void SetImageScore(CImage* pImg) { m_ScoreImg = pImg; }
+	void SetImagMini(CImage* pImg) { m_miniScoreImg = pImg; }
 
 
 	//このクラスで描画の処理入れたいから引数にメモリDCが必要
 	void TitleDraw(CCamera* pCamera,int score);
+
+	//ゲームメインに表示する
+	void MainDraw( int x, int y,int score);
 
 
 	char m_scoreStr[20] = "";
@@ -39,7 +43,9 @@ public:
 	int m_Score;
 
 	//ハイスコア
-	int m_HightScore;
+	int m_HightScore=0;
 
 	CImage* m_ScoreImg;
+	CImage* m_miniScoreImg;
+
 };

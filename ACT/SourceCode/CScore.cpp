@@ -33,20 +33,21 @@ void CScore::TitleDraw(CCamera* pCamera, int score)
 	}
 
 	//今プレイして得たスコアがハイスコアより小さいとき
-	if (score <= m_HightScore)
+	if(score <= m_HightScore)
 	{
 		//何もしない
+		
 	}
 
-
-	//ここにハイスコアが入ります
-	m_HightScore = score;
+	//ハイスコアを保存して、
+	int displayscore = m_HightScore;
+	
 	//計算
-	int keisann = score;
+	int keisann = displayscore;
 
-	while(m_HightScore != 0)
+	while(displayscore != 0)
 	{
-		m_HightScore = m_HightScore / 10;
+		displayscore = displayscore / 10;
 		keta++;
 
 	}
@@ -98,5 +99,34 @@ void CScore::TitleDraw(CCamera* pCamera, int score)
 			keisann /= 10;
 		}
 	}
+
+}
+
+void CScore::MainDraw( int x, int y, int score)
+{
+	if (m_ScoreImg == nullptr)
+	{
+		return;
+	}
+	int keisann = score;
+	int keta_index = 0;
+
+	do
+	{
+		int digit = keisann % 10;
+
+		m_miniScoreImg->TransBlt(
+			x - 32 - 32 * keta_index,
+			y,
+			32, 32,
+			32 * digit,
+			0
+		);
+
+		keisann /= 10;
+		keta_index++;
+
+		
+	} while (keisann > 0);
 
 }

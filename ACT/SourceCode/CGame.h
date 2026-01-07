@@ -95,8 +95,11 @@ private:
 	HFONT		m_hFont;		//フォントハンドル.
 	CImage*		m_pBackImg;		//背景画像.
 
+
 	//スコア
 	CImage* m_ScoreImg;
+	//スコア画像小さいバージョン
+	CImage* m_miniScoreImg;
 	
 	//タイトル
 
@@ -175,7 +178,7 @@ private:
 
 	CScore* m_HightScore;
 
-	int score;
+	int  score;
 	
 	CGameOver* m_GameOver;
 	CEnding* m_Ending;

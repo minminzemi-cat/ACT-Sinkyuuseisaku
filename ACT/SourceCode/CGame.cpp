@@ -176,6 +176,8 @@ bool CGame::Create()
 		//スコア
 		m_ScoreImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
+		m_miniScoreImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+
 
 	}
 
@@ -291,6 +293,9 @@ bool CGame::Create()
 
 		//スコア画像の読み込み
 		if (m_ScoreImg->LoadBmp("Data\\Image\\SCOAR.bmp") == false)  return false;
+
+		//スコア画像の小さいバージョン
+		if (m_miniScoreImg->LoadBmp("Data\\Image\\SCOAR1.bmp") == false)  return false;
 	}
 
 
@@ -388,6 +393,7 @@ bool CGame::Create()
 	//スコア画面のインスタンス生成
 	m_Score = new CScore();
 	m_Score->SetImageScore(m_ScoreImg);
+	m_Score->SetImagMini(m_miniScoreImg);
 
 
 	//カメラのインスタンス生成.
@@ -435,6 +441,7 @@ void CGame::Destroy()
 
 
 	SAFE_DELETE(m_pScoreImg);
+	SAFE_DELETE(m_miniScoreImg);
 	SAFE_DELETE(m_pExprotionImg);
 	SAFE_DELETE(m_pEExprotionImg);
 
@@ -471,7 +478,7 @@ void CGame::Update()
 
 					//スコアを初期化
 					score = 0;
-
+					
 				}
 			}
 			//ゲーム終了
@@ -818,6 +825,12 @@ void CGame::Draw()
 
 			//m_pBoss->RDraw(m_pCamera);
 
+
+
+
+
+			//スコアの描画
+			m_Score->MainDraw(WND_W - 20, 20,score);
 
 
 			//必殺ショット画像
