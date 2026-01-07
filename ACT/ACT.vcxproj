@@ -140,6 +140,7 @@
     <ClCompile Include="SourceCode\CSound.cpp" />
     <ClCompile Include="SourceCode\CSoundManager.cpp" />
     <ClCompile Include="SourceCode\CStage.cpp" />
+    <ClCompile Include="SourceCode\CTimer.cpp" />
     <ClCompile Include="SourceCode\CTitle.cpp" />
     <ClCompile Include="SourceCode\CWinInit.cpp" />
     <ClCompile Include="SourceCode\Ending.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="SourceCode\CSound.h" />
     <ClInclude Include="SourceCode\CSoundManager.h" />
     <ClInclude Include="SourceCode\CStage.h" />
+    <ClInclude Include="SourceCode\CTimer.h" />
     <ClInclude Include="SourceCode\CTitle.h" />
     <ClInclude Include="SourceCode\CWinInit.h" />
     <ClInclude Include="SourceCode\Ending.h" />

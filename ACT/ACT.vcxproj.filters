@@ -76,6 +76,9 @@
     <Filter Include="SourceCode\CTitle">
       <UniqueIdentifier>{afb4b950-6483-4667-b8f2-c7b459cd4a47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SourceCode\CTimer">
+      <UniqueIdentifier>{7e63da71-38e6-47f6-8430-82c0ab0afa1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\CGame.cpp">
@@ -152,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\CTitle.cpp">
       <Filter>SourceCode\CTitle</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\CTimer.cpp">
+      <Filter>SourceCode\CTimer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\CTitle.h">
       <Filter>SourceCode\CTitle</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\CTimer.h">
+      <Filter>SourceCode\CTimer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

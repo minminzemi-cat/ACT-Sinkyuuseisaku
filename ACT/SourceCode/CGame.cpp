@@ -178,6 +178,8 @@ bool CGame::Create()
 
 		m_miniScoreImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
+		m_TimerImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+
 
 	}
 
@@ -296,6 +298,9 @@ bool CGame::Create()
 
 		//スコア画像の小さいバージョン
 		if (m_miniScoreImg->LoadBmp("Data\\Image\\SCOAR1.bmp") == false)  return false;
+
+		//クリアまでの時間を表示する
+		if (m_TimerImg->LoadBmp("Data\\Image\\SCOAR1.bmp") == false)  return false;
 	}
 
 
@@ -396,6 +401,12 @@ bool CGame::Create()
 	m_Score->SetImagMini(m_miniScoreImg);
 
 
+
+	//ゲームクリアまでの残り時間
+	m_Timer = new CTimer();
+	m_Timer->SetImage(m_TimerImg);
+
+
 	//カメラのインスタンス生成.
 	m_pCamera = new CCamera();
 	m_pCamera->SetStageWidth( m_pStage->GetWidth() );
@@ -441,6 +452,7 @@ void CGame::Destroy()
 
 
 	SAFE_DELETE(m_pScoreImg);
+	SAFE_DELETE(m_TimerImg);
 	SAFE_DELETE(m_miniScoreImg);
 	SAFE_DELETE(m_pExprotionImg);
 	SAFE_DELETE(m_pEExprotionImg);

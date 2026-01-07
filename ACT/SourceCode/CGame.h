@@ -23,6 +23,7 @@
 #include "Result.h"		//カメラクラス.
 #include "Hitjudgment.h"
 
+#include"CTimer.h"		//クリアタイムを計算する
 /**************************************************
 *	ゲームクラス.
 **/
@@ -145,6 +146,8 @@ private:
 	CImage*		m_pPlayerImg;	//プレイヤー画像.
 	CImage*		m_pStageImg;	//ステージ画像.
 	CImage*     m_pScoreImg;	//スコア画像.
+
+	CImage* m_TimerImg;			//タイム画像　スコアと同じ画像
 	
 
 	//-----自機-----.
@@ -179,6 +182,12 @@ private:
 	CScore* m_HightScore;
 
 	int  score;
+
+	CTimer* m_Timer;
+
+	//この変数には経過した時間が代入されていく
+	int time;
+
 	
 	CGameOver* m_GameOver;
 	CEnding* m_Ending;
