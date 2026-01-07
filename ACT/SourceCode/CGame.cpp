@@ -469,7 +469,7 @@ void CGame::Update()
 
 					m_scene = enScene::GameMain;	//ゲームメインへ
 
-					//
+					//スコアを初期化
 					score = 0;
 
 				}
