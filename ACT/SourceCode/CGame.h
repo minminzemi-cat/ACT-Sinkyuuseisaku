@@ -14,9 +14,9 @@
 #include "CStage.h"			//ステージクラス.
 #include "CCamera.h"		//カメラクラス.
 
-#include"CTitle.h"
+#include"CTitle.h"			//タイトルクラス
 
-#include"CScore.h"
+#include"CScore.h"			//スコアクラス
 
 #include "GameOver.h"		//カメラクラス.
 #include "Ending.h"		//カメラクラス.
@@ -141,7 +141,7 @@ private:
 
 	CImage*		m_pPlayerImg;	//プレイヤー画像.
 	CImage*		m_pStageImg;	//ステージ画像.
-	CImage*     m_pscoreImg;	//スコア画像.
+	CImage*     m_pScoreImg;	//スコア画像.
 	
 
 	//-----自機-----.

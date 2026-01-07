@@ -3,7 +3,7 @@
 #include"Global.h"
 #include"CImage.h"
 #include "CCamera.h"	//カメラクラス.
-#include "MyMath.h"	//カメラクラス.
+#include "MyMath.h"	
 
 
 /***********************************
@@ -26,7 +26,6 @@ public:
 	//画像読み込み
 	void SetImageScore(CImage* pImg) { m_ScoreImg = pImg; }
 
-	void Draw(CCamera* pCamera, int score);
 
 	//このクラスで描画の処理入れたいから引数にメモリDCが必要
 	void TitleDraw(CCamera* pCamera,int score);
@@ -34,7 +33,9 @@ public:
 
 	char m_scoreStr[20] = "";
 
-	//ここにはスコア
+
+
+	//このスコアはプレイして出てきたスコアを入れる
 	int m_Score;
 
 	//ハイスコア

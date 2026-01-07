@@ -1,7 +1,7 @@
 #include "CScore.h"
 
 CScore::CScore()
-	:m_ScoreImg(nullptr)
+	
 {
 }
 
@@ -15,25 +15,6 @@ void CScore::Update()
 
 
 
-void CScore::Draw(CCamera* pCamera,int score)
-{
-	
-	//wsprintf(m_scoreStr, //これを表示させる
-	//	"score[%03d]", 
-	//	(DWORD)score);
-
-	////スコアの表示.
-	//TextOut(pCamera,
-	//	0,					//X座標
-	//	0,						//Y座標
-	//	m_scoreStr,				//文字列
-	//	lstrlen(m_scoreStr));		//文字はこのくらいありますよ
-
-
-		
-}
-
-
 //このクラスで描画の処理入れたいから引数にメモリDCが必要
 void CScore::TitleDraw(CCamera* pCamera, int score)
 {
@@ -42,17 +23,34 @@ void CScore::TitleDraw(CCamera* pCamera, int score)
 
 	//桁
 	int keta = 0;
-	//ここにスコアが入ります
+	
+	//今プレイしたスコアがハイスコアより大きいとき
+	if (score >= m_HightScore)
+	{
+		//ハイスコアに今のスコアを代入
+		m_HightScore = score;
+		
+	}
+
+	//今プレイして得たスコアがハイスコアより小さいとき
+	if (score <= m_HightScore)
+	{
+		//何もしない
+	}
+
+
+	//ここにハイスコアが入ります
 	m_HightScore = score;
 	//計算
 	int keisann = score;
 
-	while (m_HightScore != 0)
+	while(m_HightScore != 0)
 	{
 		m_HightScore = m_HightScore / 10;
 		keta++;
 
 	}
+
 	if (keta == 0) {
 
 		//この４つの描画処理は０を４つ表示させる
@@ -91,11 +89,12 @@ void CScore::TitleDraw(CCamera* pCamera, int score)
 	}
 	else {
 		for (int i = 0; i < keta; i++) {
+
 			m_ScoreImg->TransBlt(
-				200 - 20 * i,			//X座標
-				108,					//Y座標
+				300 - 64 * i,			//X座標
+				220,					//Y座標
 				64, 64,					//画像幅、高さ.
-				64 * (keisann % 10), 0); //元画像x,y座標.
+				63 * (keisann % 10), 0); //元画像x,y座標.
 			keisann /= 10;
 		}
 	}

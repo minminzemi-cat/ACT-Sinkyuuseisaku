@@ -268,7 +268,7 @@ void CEnemy::HIT(int i)
 	SP += 1;
 	CSoundManager::PlaySE(CSoundManager::enList::SE_Ken);
 
-	m_HightScore += 100;
+	
 
 }
 
@@ -283,7 +283,7 @@ void CEnemy::HIT2(int i)
 		}
 	}
 
-	m_HightScore += 100;
+	
 	
 }
 
@@ -294,5 +294,5 @@ void CEnemy::ESHIT(int i)
 		m_eshotFlag[i] = false;
 	}
 
-	m_HightScore += 100;
+	
 }

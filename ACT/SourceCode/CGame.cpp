@@ -168,7 +168,7 @@ bool CGame::Create()
 		//ステージ画像のインスタンス生成.
 		m_pStageImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 		//スコア画像のインスタンス生成.
-		m_pscoreImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+		m_pScoreImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 		//称号
 		m_pRankImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
@@ -284,7 +284,7 @@ bool CGame::Create()
 		//キャラクターの読み込み.
 		if (m_pCharaImg->LoadBmp("Data\\BMP\\chara.bmp") == false) return false;
 		//スコアの読み込み
-		if (m_pscoreImg->LoadBmp("Data\\Image\\SCOAR.bmp") == false)  return false;
+		if (m_pScoreImg->LoadBmp("Data\\Image\\SCOAR.bmp") == false)  return false;
 		//ステージ画像の読み込み
 		if (m_pStageImg->LoadBmp("Data\\Image\\SwitchPlace_lite.bmp") == false)  return false;
 
@@ -346,7 +346,7 @@ bool CGame::Create()
 	//画像の設定.
 	m_pStage->SetImage( m_pStageImg );
 	m_pStage->SetImageBack(m_pBackImg);
-	m_pStage->SetImageScore(m_pscoreImg);
+	m_pStage->SetImageScore(m_pScoreImg);
 	////マップデータ読み込み.
 	//if( m_pStage->LoadData( "Data\\MapData\\Map01.csv" ) == false ) return false;
 
@@ -385,6 +385,7 @@ bool CGame::Create()
 	//m_result->SetImagecgame(m_cgame);
 
 
+	//スコア画面のインスタンス生成
 	m_Score = new CScore();
 	m_Score->SetImageScore(m_ScoreImg);
 
@@ -433,7 +434,7 @@ void CGame::Destroy()
 	SAFE_DELETE(m_pbossWayshotImg);
 
 
-	SAFE_DELETE(m_pscoreImg);
+	SAFE_DELETE(m_pScoreImg);
 	SAFE_DELETE(m_pExprotionImg);
 	SAFE_DELETE(m_pEExprotionImg);
 
@@ -468,6 +469,8 @@ void CGame::Update()
 
 					m_scene = enScene::GameMain;	//ゲームメインへ
 
+					//
+					score = 0;
 
 				}
 			}
@@ -496,7 +499,19 @@ void CGame::Update()
 		//ゲームメイン
 		case enScene::GameMain:
 		{
+			//強制的にリザルト画面へ
+			if (GetAsyncKeyState('O') & 0x8000) {
+				m_scene = enScene::Result;
+			}
 
+
+			//スコアを試しに入れてみる
+			if (GetAsyncKeyState('V') & 0x0001) {
+				score+=1000;
+
+			}
+
+			//試しにボスの体力を30%以下にする処理
 			if (GetAsyncKeyState('A') & 0x0001) {
 				m_pBoss->B_HP = 100;
 
@@ -507,7 +522,19 @@ void CGame::Update()
 			if (GetAsyncKeyState(VK_F1) & 0x0001) {
 				//ウィンドウを閉じる通知を送る.
 				PostMessage(m_pGameWnd->hWnd, WM_CLOSE, 0, 0);
+
+				//ハイスコアを０にリセットする
+				//ゲーム終了したらデータリセットでいい
+				m_HightScore == nullptr;
 			}
+
+
+
+
+
+
+
+
 
 			//プレイヤー動作.
 			m_pPlayer->Update();
@@ -529,8 +556,8 @@ void CGame::Update()
 			//ステージ動作.
 			m_pStage->Update();
 
-			//ボス動作.
-			m_pBoss->Update();
+			////ボス動作.
+			//m_pBoss->Update();
 
 			//カメラ位置をプレイヤーに揃える.
 			m_pCamera->SetPosition(m_pPlayer->GetPosition());
@@ -734,6 +761,10 @@ void CGame::Update()
 
 		case enScene::Result:
 		{
+
+			if (GetAsyncKeyState(VK_RETURN) & 0x8000) {
+				m_scene = enScene::Title;
+			}
 			m_result->Update();
 			
 		}
@@ -777,15 +808,15 @@ void CGame::Draw()
 
 
 
-			//ボス本体の描画
-			m_pBoss->ZDraw(m_pCamera);
+			////ボス本体の描画
+			//m_pBoss->ZDraw(m_pCamera);
 
-			//ボスの一部と攻撃を描画
-			m_pBoss->Draw(m_pCamera);
+			////ボスの一部と攻撃を描画
+			//m_pBoss->Draw(m_pCamera);
 
-			m_pBoss->XDraw(m_pCamera);
+			//m_pBoss->XDraw(m_pCamera);
 
-			m_pBoss->RDraw(m_pCamera);
+			//m_pBoss->RDraw(m_pCamera);
 
 
 
