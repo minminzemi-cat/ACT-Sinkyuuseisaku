@@ -145,6 +145,7 @@
     <ClCompile Include="SourceCode\CWinInit.cpp" />
     <ClCompile Include="SourceCode\Ending.cpp" />
     <ClCompile Include="SourceCode\Excalibur.cpp" />
+    <ClCompile Include="SourceCode\CGameClear.cpp" />
     <ClCompile Include="SourceCode\GameOver.cpp" />
     <ClCompile Include="SourceCode\Hitjudgment.cpp" />
     <ClCompile Include="SourceCode\Main.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="SourceCode\CWinInit.h" />
     <ClInclude Include="SourceCode\Ending.h" />
     <ClInclude Include="SourceCode\Excalibur.h" />
+    <ClInclude Include="SourceCode\CGameClear.h" />
     <ClInclude Include="SourceCode\GameOver.h" />
     <ClInclude Include="SourceCode\Global.h" />
     <ClInclude Include="SourceCode\Hitjudgment.h" />

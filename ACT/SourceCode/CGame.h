@@ -24,6 +24,7 @@
 #include "Hitjudgment.h"
 
 #include"CTimer.h"		//クリアタイムを計算する
+#include"CGameClear.h"		//ゲームクリア
 /**************************************************
 *	ゲームクラス.
 **/
@@ -49,7 +50,8 @@ public:
 		GameMain,	//ゲーム中.
 		GameOver,	//ゲームオーバー.
 		Ending,		//エンディング.
-		Result,
+		Result,		//称号とか表示
+		GameClear, //ゲームクリア
 	};
 
 	//---------------------------------------
@@ -108,6 +110,8 @@ private:
 
 	CImage* m_pKennImg;
 
+
+	CImage*		m_ClearImg;//クリア画面
 	CImage*     m_pOverImg;
 	CImage*     m_pEndingImg;
 	CImage*     m_pResultImg;
@@ -185,9 +189,13 @@ private:
 
 	CTimer* m_Timer;
 
-	//この変数には経過した時間が代入されていく
-	int time;
 
+	//この変数には経過した時間が代入されていく
+	int times=0;
+
+	int counttime = 0;
+
+	CGameClear* m_Clear;
 	
 	CGameOver* m_GameOver;
 	CEnding* m_Ending;

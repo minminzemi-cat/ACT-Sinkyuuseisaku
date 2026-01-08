@@ -22,15 +22,15 @@ public:
 
 	//int time　には、経過した時間が入っている
 
-	void Updata(int time);
+	void Update(int times);
 
 	//ゲームメインで残りの時間を表示
-	void Draw(int x, int y,int time);
+	void Draw(int x, int y,int times);
 
 
 public:
 	//クリアするまでのタイム,残り時間
-	int kuriatime=100;
+	int kuriatime=10;
 
 	//表示する残り時間
 	int kuriaTimer;

@@ -79,6 +79,9 @@
     <Filter Include="SourceCode\CTimer">
       <UniqueIdentifier>{7e63da71-38e6-47f6-8430-82c0ab0afa1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SourceCode\Sene\GameClear">
+      <UniqueIdentifier>{c3988454-e89a-482a-a40b-4f67217706c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\CGame.cpp">
@@ -158,6 +161,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\CTimer.cpp">
       <Filter>SourceCode\CTimer</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\CGameClear.cpp">
+      <Filter>SourceCode\Sene\GameClear</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\CTimer.h">
       <Filter>SourceCode\CTimer</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\CGameClear.h">
+      <Filter>SourceCode\Sene\GameClear</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

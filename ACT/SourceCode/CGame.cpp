@@ -157,6 +157,9 @@ bool CGame::Create()
 		//タイトルの剣
 		m_pKennImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
+		
+		//ゲームクリア
+		m_ClearImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 		//ゲームオーバー
 		m_pOverImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 		//エンディング
@@ -275,8 +278,8 @@ bool CGame::Create()
 		if (m_pKennImg->LoadBmp("Data\\Image\\Ken1.bmp") == false) return false;
 
 
-
-
+		//ゲームクリア
+		if (m_ClearImg->LoadBmp("Data\\Image\\WIN.bmp") == false) return false;
 		//ゲームオーバー.
 		if (m_pOverImg->LoadBmp("Data\\Image\\GameOver.bmp") == false) return false;
 		//ゲームクリア.
@@ -370,7 +373,9 @@ bool CGame::Create()
 	m_pTitle->SetImageBack(m_pTitleImg);
 	m_pTitle->SetImageSord(m_pKennImg);
 
-
+	//ゲームクリアのインスタンス生成
+	m_Clear = new CGameClear();
+	m_Clear->SetImagClear(m_ClearImg);
 
 
 	//ゲームオーバーのインスタンス生成.
@@ -549,10 +554,26 @@ void CGame::Update()
 
 
 
+			
 
+			
+			//FPSで一秒の計算をする
+			counttime++;
+			//カウントがプラスされて行ってFPS（６０）で割って余りがゼロになると
+			if (counttime % FPS == 0)
+			{
+				//引数にプラス１されていく
+				times++;
+			}
 
+			//タイマー動作
+			m_Timer->Update(times);
 
-
+			//クリアタイムが０になったらエンディングに
+			if (m_Timer->kuriaTimer == 0)
+			{
+				m_scene = enScene::GameClear;
+			}
 
 
 			//プレイヤー動作.
@@ -760,33 +781,44 @@ void CGame::Update()
 		}
 		break;
 
-		case enScene::GameOver:
+		case enScene::GameClear:
 		{
-			
-			if (GetAsyncKeyState(VK_RETURN) & 0x8000) {
+			if (GetAsyncKeyState(VK_RETURN) & 0x0001) {
 				m_scene = enScene::Result;
 			}
+			times = 0;
 		}
 		break;
 
-		case enScene::Ending:
+
+		case enScene::GameOver:
 		{
-			if (GetAsyncKeyState(VK_RETURN) & 0x8000) {
+			
+			if (GetAsyncKeyState(VK_RETURN) & 0x0001) {
 				m_scene = enScene::Result;
 			}
-			m_Ending->Update();
 		}
 		break;
 
 		case enScene::Result:
 		{
 
-			if (GetAsyncKeyState(VK_RETURN) & 0x8000) {
-				m_scene = enScene::Title;
+			if (GetAsyncKeyState(VK_RETURN) & 0x0001) {
+				m_scene = enScene::Ending;
 			}
 			m_result->Update();
-			
+
 		}
+		case enScene::Ending:
+		{
+			if (GetAsyncKeyState(VK_RETURN) & 0x0001) {
+				m_scene = enScene::Title;
+			}
+			m_Ending->Update();
+		}
+		break;
+
+		
 		break;
 	}
 
@@ -841,9 +873,11 @@ void CGame::Draw()
 
 
 
-			//スコアの描画
+			//ゲームメインでのスコアの描画
 			m_Score->MainDraw(WND_W - 20, 20,score);
 
+			//ゲームメインでのクリアタイム表示
+			m_Timer->Draw(100, 20, times);
 
 			//必殺ショット画像
 			m_ppshot->DrawSpecialmove(m_pCamera);
@@ -862,6 +896,12 @@ void CGame::Draw()
 			m_GameOver->Draw(m_pCamera);
 			break;
 		}
+
+		case enScene::GameClear: {
+			m_Clear->Draw(m_pCamera);
+			break;
+		}
+
 
 		case enScene::Result: {
 			m_result->Draw(m_pCamera);

@@ -10,7 +10,7 @@ CTimer::~CTimer()
 
 
 //ゲームメインで残り時間を表示
-void CTimer::Draw(int x, int y, int time)
+void CTimer::Draw(int x, int y, int times)
 {
 
 
@@ -58,17 +58,17 @@ void CTimer::Draw(int x, int y, int time)
 }
 
 
-void CTimer::Updata(int time)
+void CTimer::Update(int times)
 {
-    //タイムに秒数が追加されていく処理
-    int count;
-    count++;
-    if (count % FPS == 0)
-    {
-        time++;
-    }
+    ////タイムに秒数が追加されていく処理
+    //int count = 0;
+    //count++;
+    //if (count % FPS == 0)
+    //{
+    //    times++;
+    //}
 
     //残り時間　　クリアタイム　- 経過じた時間
-    kuriaTimer = kuriatime - time;
+    kuriaTimer = kuriatime - times;
 
 }
