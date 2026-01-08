@@ -175,6 +175,9 @@ bool CGame::Create()
 		//称号
 		m_pRankImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
 
+		//リザルト画面のスコア
+		RScoreImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
+
 
 		//スコア
 		m_ScoreImg = new CImage(m_pGameWnd->hScreenDC, m_hMemDC, m_hWorkDC, m_hWorkDC2);
@@ -288,6 +291,10 @@ bool CGame::Create()
 		if (m_pResultImg->LoadBmp("Data\\Image\\Result.bmp") == false) return false;
 		//リザルト2画面
 		if (m_pRankImg->LoadBmp("Data\\Image\\Rank.bmp") == false) return false;
+
+		//リザルト画面のスコア
+		if (RScoreImg->LoadBmp("Data\\Image\\SCOAR1.bmp") == false) return false;
+
 		//キャラクターの読み込み.
 		if (m_pCharaImg->LoadBmp("Data\\BMP\\chara.bmp") == false) return false;
 		//スコアの読み込み
@@ -397,6 +404,7 @@ bool CGame::Create()
 	m_result->SetImageRank(m_pRankImg);
 	m_result->SetEn(m_pEnemy);
 	m_result->SetEx(m_Exc);
+	m_result->SetImagScore(RScoreImg);
 	//m_result->SetImagecgame(m_cgame);
 
 
@@ -877,7 +885,7 @@ void CGame::Draw()
 			m_Score->MainDraw(WND_W - 20, 20,score);
 
 			//ゲームメインでのクリアタイム表示
-			m_Timer->Draw(100, 20, times);
+			m_Timer->Draw(260, 20, times);
 
 			//必殺ショット画像
 			m_ppshot->DrawSpecialmove(m_pCamera);

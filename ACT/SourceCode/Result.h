@@ -5,6 +5,7 @@
 #include "CEnemy.h"	//ÉJÉÅÉâÉNÉâÉX.
 #include "Excalibur.h"
 #include "CCharacter.h"
+#include"CScore.h"
 
 class CResult
 	:CCharacter
@@ -38,6 +39,9 @@ public:
 		RankIMG = tit;
 	};
 
+	void SetImagScore(CImage* pImg) { RScoreImg = pImg; }
+
+
 	void SetEn(CEnemy* tit) {
 		m_enemy = tit;
 	};
@@ -50,10 +54,16 @@ public:
 private:
 	CImage* ResultIMG;
 	CImage* RankIMG;
+
+	CImage* RScoreImg;
+
 	CEnemy* m_enemy;
 	Exculibur* exc;
 	//CCharacter* CH;
 	int     m_Rank;
+
+	CScore* m_Score;
+	int score;
 
 };
 

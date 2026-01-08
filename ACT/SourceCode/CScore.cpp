@@ -55,29 +55,29 @@ void CScore::TitleDraw(CCamera* pCamera, int score)
 	if (keta == 0) {
 
 		//この４つの描画処理は０を４つ表示させる
-		m_ScoreImg->TransBlt(
-			108,		//表示させるX座標
-			220,		//表示させるY座標
-			64,			//画像幅
-			64,			//画像高さ.	
-			3,			//元画像x
-			0);			//元画像y座標.
+		//m_ScoreImg->TransBlt(
+		//	108,		//表示させるX座標
+		//	220,		//表示させるY座標
+		//	64,			//画像幅
+		//	64,			//画像高さ.	
+		//	3,			//元画像x
+		//	0);			//元画像y座標.
 
-		m_ScoreImg->TransBlt(
-			172,		//表示させるX座標
-			220,		//表示させるY座標
-			64,			//画像幅
-			64,			//画像高さ.	
-			3,			//元画像x
-			0);			//元画像y座標.
+		//m_ScoreImg->TransBlt(
+		//	172,		//表示させるX座標
+		//	220,		//表示させるY座標
+		//	64,			//画像幅
+		//	64,			//画像高さ.	
+		//	3,			//元画像x
+		//	0);			//元画像y座標.
 
-		m_ScoreImg->TransBlt(
-			236,		//表示させるX座標
-			220,		//表示させるY座標
-			64,			//画像幅
-			64,			//画像高さ.	
-			3,			//元画像x
-			0);			//元画像y座標.
+		//m_ScoreImg->TransBlt(
+		//	236,		//表示させるX座標
+		//	220,		//表示させるY座標
+		//	64,			//画像幅
+		//	64,			//画像高さ.	
+		//	3,			//元画像x
+		//	0);			//元画像y座標.
 
 		m_ScoreImg->TransBlt(
 			300,		//表示させるX座標
@@ -102,6 +102,7 @@ void CScore::TitleDraw(CCamera* pCamera, int score)
 
 }
 
+//ゲームメインでのスコアが増えていくとスコアが増える描画
 void CScore::MainDraw( int x, int y, int score)
 {
 	if (m_ScoreImg == nullptr)
@@ -128,5 +129,44 @@ void CScore::MainDraw( int x, int y, int score)
 
 		
 	} while (keisann > 0);
+
+}
+
+void CScore::ResultHiDraw(int x, int y, int score)
+{
+
+
+
+
+}
+
+void CScore::ResultDraw(int x, int y, int score)
+{
+
+	if (m_miniScoreImg == nullptr)
+	{
+		return;
+	}
+	int keisann = score;
+	int keta_index = 0;
+
+	do
+	{
+		int digit = keisann % 10;
+
+		m_miniScoreImg->TransBlt(
+			x - 32 - 32 * keta_index,
+			y,
+			32, 32,
+			32 * digit,
+			0
+		);
+
+		keisann /= 10;
+		keta_index++;
+
+
+	} while (keisann > 0);
+
 
 }

@@ -116,6 +116,9 @@ private:
 	CImage*     m_pEndingImg;
 	CImage*     m_pResultImg;
 	CImage*     m_pRankImg;
+
+	CImage*		RScoreImg;	//リザルト画面のスコア
+	
 	CImage*		m_pCharaImg;	//キャラクター画像.
 	CImage*     m_pPLeftImg;	//キャラクター残基.
 	CImage*     m_pEExprotionImg;
