@@ -26,7 +26,12 @@ public:
 	CResult();
 	~CResult();
 
+public:
+
 	void Update();
+
+	//ハイスコアを描画する
+	void HiDraw(CCamera* pCamera);
 
 	void Draw(CCamera* pCamera);
 
