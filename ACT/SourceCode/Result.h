@@ -30,8 +30,8 @@ public:
 
 	void Update();
 
-	//ハイスコアを描画する
-	void HiDraw(CCamera* pCamera);
+
+
 
 	void Draw(CCamera* pCamera);
 
@@ -66,6 +66,8 @@ private:
 	Exculibur* exc;
 	//CCharacter* CH;
 	int     m_Rank;
+
+	CScore*  m_HightScore;
 
 	CScore* m_Score;
 	int score;

@@ -913,6 +913,10 @@ void CGame::Draw()
 
 		case enScene::Result: {
 			m_result->Draw(m_pCamera);
+			
+			m_Score->ResultHiDraw(340, 400, score);
+
+			m_Score->ResultDraw(340, 440, score);
 			break;
 		}
 	}

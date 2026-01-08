@@ -61,9 +61,6 @@ void CResult::Draw(CCamera* pCamera)
 {
 	ResultIMG->TransBlt(0, 0, 480, 640, 0, 0);
 
-	m_Score->ResultDraw(350, 460, score);
-
-
 
 	switch (m_Rank)
 	{
@@ -95,3 +92,5 @@ void CResult::Draw(CCamera* pCamera)
 	}
 
 }
+
+

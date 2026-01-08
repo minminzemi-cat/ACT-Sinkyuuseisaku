@@ -132,17 +132,56 @@ void CScore::MainDraw( int x, int y, int score)
 
 }
 
+
+//--------------------------------------------------------------------
+//				リザルト画面
+
+
+//ハイスコア
 void CScore::ResultHiDraw(int x, int y, int score)
 {
+	// 1. 画像がないなら何もしない
+	if (m_miniScoreImg == nullptr) return;
 
+	// 2. ハイスコアの更新チェック
+	if (score > m_HightScore)
+	{
+		m_HightScore = score;
+	}
 
+	// 3. 表示用の変数にコピー（元の m_HightScore を壊さないため）
+	int tempScore = m_HightScore;
 
+	// 4. 何桁目かを表すカウンター
+	int keta_index = 0;
 
+	// 5. 【重要】タイマーと同じ do-while ループ
+	do
+	{
+		// 一番右の桁を取り出す
+		int digit = tempScore % 10;
+
+		// 描画する
+		m_miniScoreImg->TransBlt(
+			x - 32 * keta_index,     // 桁が上がるごとに左へずらす
+			y,
+			32, 32,
+			32 * digit,              // 数字に対応した画像の位置
+			0
+		);
+
+		// 次の桁へ
+		tempScore /= 10;
+		keta_index++;
+
+	} while (tempScore > 0); // 0になっても最低1回は「0」を描画する
 }
 
+
+
+//普通のスコア
 void CScore::ResultDraw(int x, int y, int score)
 {
-
 	if (m_miniScoreImg == nullptr)
 	{
 		return;
@@ -155,7 +194,7 @@ void CScore::ResultDraw(int x, int y, int score)
 		int digit = keisann % 10;
 
 		m_miniScoreImg->TransBlt(
-			x - 32 - 32 * keta_index,
+			x - 32 * keta_index,
 			y,
 			32, 32,
 			32 * digit,
@@ -167,6 +206,8 @@ void CScore::ResultDraw(int x, int y, int score)
 
 
 	} while (keisann > 0);
+
+
 
 
 }

@@ -30,7 +30,7 @@ public:
 
 public:
 	//クリアするまでのタイム,残り時間
-	int kuriatime=10;
+	int kuriatime=5;
 
 	//表示する残り時間
 	int kuriaTimer;

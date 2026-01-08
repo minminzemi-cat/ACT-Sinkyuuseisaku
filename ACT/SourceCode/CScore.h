@@ -34,10 +34,11 @@ public:
 	//ゲームメインに表示する
 	void MainDraw( int x, int y,int score);
 
+
 	//リザルト画面に表示するハイスコア
 	void ResultHiDraw(int x, int y, int score);
 
-	//リザルト画面に表示するその人がとったスコア
+	//リザルト画面に表示するスコア
 	void ResultDraw(int x, int y, int score);
 
 	char m_scoreStr[20] = "";
