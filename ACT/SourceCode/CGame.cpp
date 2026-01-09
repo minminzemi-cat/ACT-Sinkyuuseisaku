@@ -548,9 +548,7 @@ void CGame::Update()
 				//ウィンドウを閉じる通知を送る.
 				PostMessage(m_pGameWnd->hWnd, WM_CLOSE, 0, 0);
 
-				//ハイスコアを０にリセットする
-				//ゲーム終了したらデータリセットでいい
-				m_HightScore == nullptr;
+				
 			}
 
 

@@ -62,7 +62,7 @@ void CTitle::Update()
 	if (GetAsyncKeyState(VK_UP) & 0x0001)//アップキー
 	{
 		//剣が画面買いに行かないようにする処理
-		if (m_TitleSword > 300) {
+		if (m_TitleSword >= 300) {
 			//剣の画像がアップキーを押された場合どのような動きをするか
 			m_TitleSword -= 120;
 		}
