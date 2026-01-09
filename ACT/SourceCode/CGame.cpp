@@ -389,9 +389,6 @@ bool CGame::Create()
 	m_GameOver = new CGameOver();
 	m_GameOver->SetImageGameOver(m_pOverImg);
 
-	//ゲームオーバーのインスタンス生成.
-	m_GameOver = new CGameOver();
-	m_GameOver->SetImageGameOver(m_pOverImg);
 
 	//ゲームクリアのインスタンス生成.
 	m_Ending = new CEnding();
@@ -464,7 +461,7 @@ void CGame::Destroy()
 	SAFE_DELETE(m_pbossWayshotImg);
 
 
-	SAFE_DELETE(m_pScoreImg);
+	SAFE_DELETE(m_ScoreImg);
 	SAFE_DELETE(m_TimerImg);
 	SAFE_DELETE(m_miniScoreImg);
 	SAFE_DELETE(m_pExprotionImg);
@@ -516,11 +513,7 @@ void CGame::Update()
 				}
 			}
 
-			if (GetAsyncKeyState(VK_RETURN) & 0x0001)
-			{
-				m_scene = enScene::GameMain;
-			}
-			InitializeGame();
+			
 		}
 		
 		
